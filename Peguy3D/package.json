@@ -1,0 +1,15 @@
+{
+  "name": "peguy3d",
+  "version": "1.0.0",
+  "description": "Peguy 3D",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "electron": "ELECTRON_DISABLE_SECURITY_WARNINGS=true electron ."
+  },
+  "author": "Suisei",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^27.3.11"
+  }
+}

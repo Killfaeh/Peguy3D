@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		
+		<!-- Désactiver les comportements natifs indésirables des mobiles -->
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width, minimum-scale=1" />
+		<meta name="viewport" content="width=device-width, maximum-scale=1" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name=“viewport” content=”initial-scale=1, viewport-fit=cover”>
+		
+		<title>Peguy 3D</title>
+		
+		<!-- Style de la page HTML affichée pendant le chargement du framework et autres contenus, à adapter selon les besoins -->
+		<style>
+			
+			#main, #screen
+			{
+				position: absolute;
+				left: 0px;
+				right: 0px;
+				top: 0px;
+				bottom: 0px;
+				
+				overflow: hidden;
+				
+				margin: 0px;
+				padding: 0px;
+				
+				text-align: center;
+				font-family: Arial;
+			}
+			
+			#loadingScreen
+			{
+				z-index: 100000000;
+				position: absolute;
+				left: 0px;
+				right: 0px;
+				top: 0px;
+				bottom: 0px;
+				background-color: rgba(255, 255, 255, 0.8);
+				-webkit-backdrop-filter: blur(1px);
+				backdrop-filter: blur(1px);
+				text-align: center;
+				white-space: nowrap;
+				display: none;
+			}
+			
+			#loadingScreen > div
+			{
+				display: inline-block;
+				vertical-align: middle;
+			}
+			
+			#loadingGif
+			{
+				width: 250px;
+			}
+			
+		</style>
+		
+		<link type="text/css" rel="stylesheet" media="all" href="js/highlight/styles/atom-one-dark-reasonable.min.css"></link>
+		<script src="js/highlight/highlight.min.js"></script>
+		<script>if (typeof hljs !== 'undefined') { hljs.initHighlightingOnLoad(); }</script>
+		
+	</head>
+	
+	<!-- Racine du DOM, la présence de l'id "main" est obligatoire -->
+	<body id="main">
+
+		<!-- Zone d'écran principal de l'application, la présence de l'id "screen" est obligatoire -->
+		<div id="screen">
+			<p>Loading...</p>
+		</div>
+		
+		<div id="loadingScreen" >
+			<div id="loadingGif" >
+				<img src="images/progress.gif" />
+			</div>
+			<div class="wall" ></div>
+		</div>
+		
+		<!-- Chargement du Loader qui permet d'initialiser le framework ensuite -->
+		<script src='PeguyJS/Loader.js?token=0' ></script>
+		
+		<script>
+
+			function delay(milliseconds)
+			{
+				return new Promise(resolve => { setTimeout(resolve, milliseconds); });
+			}
+
+			var consoleLog = console.log;
+
+			console.log = function($message)
+			{
+				consoleLog($message);
+
+				try
+				{
+					pythonObject.logJS($message);
+				}
+				catch ($exception)
+				{
+					//consoleLog("No Python");
+				}
+			};
+
+			var appData;
+			var viewManager;
+			var notifCenter;
+			var progressBar;
+
+			var loadScript = function($scriptName)
+			{
+				/*
+				var codeToExec = '';
+
+				if (utils.isset(viewManager))
+					codeToExec = viewManager.loadScript($scriptName);
+
+				return codeToExec;
+				//*/
+
+				console.log("Script inexistant");
+			};
+			
+			var updateProgressBar = function($progress)
+			{
+				progressBar.setCurrentValue($progress);
+				//var message = '<p style="text-align: left;" >Progress : ' + $progress + '%</p>';
+				//notifCenter.push(message, false);
+			};
+			
+			/*
+			var save3DFinished = function($fileName)
+			{
+				document.getElementById('loadingScreen').style.display = 'none';
+				var message = '<p style="text-align: left;" >The file "' + $fileName + '" has been generated.</p>';
+				notifCenter.push(message, false);
+			};
+			//*/
+
+			// Instanciation du Loader
+			var Loader = new Loader('', 'Peguy');
+			
+			Loader.addModules(['canvas3D', 'codeEditor']);
+			
+			Loader.addStyle('css/global.css', 'global');
+			
+			//Loader.addScript('js/SVGto3Ddata.js?token=' + Loader.getToken(), 'svgTo3Ddata');
+			Loader.addScript('js/VectorUtils.js?token=' + Loader.getToken(), 'vectorUtils');
+			Loader.addScript('js/ViewManager.js?token=' + Loader.getToken(), 'viewManager');
+			Loader.addScript('js/Items/Transformations/Transform.js?token=' + Loader.getToken(), 'transform');
+			Loader.addScript('js/Items/Transformations/Translation.js?token=' + Loader.getToken(), 'translation');
+			Loader.addScript('js/Items/Transformations/Rotation.js?token=' + Loader.getToken(), 'rotation');
+			Loader.addScript('js/Items/Transformations/Scale.js?token=' + Loader.getToken(), 'scale');
+			//Loader.addScript('js/Items/Transformations/SkewX.js?token=' + Loader.getToken(), 'skewX');
+			//Loader.addScript('js/Items/Transformations/SkewY.js?token=' + Loader.getToken(), 'skewY');
+			Loader.addScript('js/Items/VectorObject.js?token=' + Loader.getToken(), 'vectorObject');
+			Loader.addScript('js/Items/Object3D.js?token=' + Loader.getToken(), 'object-3d');
+			Loader.addScript('js/Items/Curve.js?token=' + Loader.getToken(), 'curve');
+			Loader.addScript('js/Items/2D/Square.js?token=' + Loader.getToken(), 'square');
+			Loader.addScript('js/Items/2D/Rect.js?token=' + Loader.getToken(), 'rect');
+			Loader.addScript('js/Items/2D/Circle.js?token=' + Loader.getToken(), 'circle');
+			Loader.addScript('js/Items/3D/Cube.js?token=' + Loader.getToken(), 'cube');
+			Loader.addScript('js/Items/3D/Cone.js?token=' + Loader.getToken(), 'cone');
+			Loader.addScript('js/Items/3D/Cuboid.js?token=' + Loader.getToken(), 'cuboid');
+			Loader.addScript('js/Items/3D/Cylinder.js?token=' + Loader.getToken(), 'cylinder');
+			Loader.addScript('js/Items/2D/Ellipse.js?token=' + Loader.getToken(), 'ellipse');
+			Loader.addScript('js/Items/3D/Ellipsoid.js?token=' + Loader.getToken(), 'ellipsoid');
+			Loader.addScript('js/Items/3D/Extrusion.js?token=' + Loader.getToken(), 'extrusion');
+			Loader.addScript('js/Items/2D/Line.js?token=' + Loader.getToken(), 'line');
+			Loader.addScript('js/Items/2D/Polyline.js?token=' + Loader.getToken(), 'polyline');
+			Loader.addScript('js/Items/2D/Polygon.js?token=' + Loader.getToken(), 'polygon');
+			Loader.addScript('js/Items/2D/Path.js?token=' + Loader.getToken(), 'path');
+			Loader.addScript('js/Items/3D/Pipe.js?token=' + Loader.getToken(), 'pipe');
+			Loader.addScript('js/Items/3D/Prism.js?token=' + Loader.getToken(), 'prism');
+			Loader.addScript('js/Items/3D/PrismFromPolygon.js?token=' + Loader.getToken(), 'prismFromPolygon');
+			Loader.addScript('js/Items/3D/PrismRevolution.js?token=' + Loader.getToken(), 'prismRevolution');
+			Loader.addScript('js/Items/3D/Pyramid.js?token=' + Loader.getToken(), 'pyramid');
+			Loader.addScript('js/Items/3D/PyramidFromPolygon.js?token=' + Loader.getToken(), 'pyramidFromPolygon');
+			Loader.addScript('js/Items/2D/RegularPolygon.js?token=' + Loader.getToken(), 'regularPolygon');
+			Loader.addScript('js/Items/3D/Revolution.js?token=' + Loader.getToken(), 'revolution');
+			Loader.addScript('js/Items/2D/Ring.js?token=' + Loader.getToken(), 'ring');
+			Loader.addScript('js/Items/3D/Sphere.js?token=' + Loader.getToken(), 'sphere');
+			Loader.addScript('js/Items/Asset.js?token=' + Loader.getToken(), 'asset');
+			Loader.addScript('js/Items/Instance.js?token=' + Loader.getToken(), 'instance');
+			Loader.addScript('js/Items/Group.js?token=' + Loader.getToken(), 'group');
+			Loader.addScript('js/Items/Material.js?token=' + Loader.getToken(), 'material');
+			Loader.addScript('js/Items/Point.js?token=' + Loader.getToken(), 'point');
+			Loader.addScript('js/Doc.js?token=' + Loader.getToken(), 'doc');
+			Loader.addScript('js/Document.js?token=' + Loader.getToken(), 'document');
+			
+			Loader.addComponent('css/docGrid.css', 'js/DocGrid.js', 'docGrid');
+			Loader.addComponent('css/appGrid.css', 'js/AppGrid.js', 'appGrid');
+			Loader.addComponent('css/previewPanel.css', 'js/PreviewPanel.js', 'previewPanel');
+			Loader.addComponent('css/vectorialAssetsListPanel.css', 'js/VectorialAssetsListPanel.js', 'vectorialAssetsListPanel');
+			Loader.addComponent('css/quickCodePanel.css', 'js/QuickCodePanel.js', 'quickCodePanel');
+			//Loader.addComponent('css/objectsTreePanel.css', 'js/ObjectsTreePanel.js', 'objectsTreePanel');
+			Loader.addComponent('css/buttonsPanel.css', 'js/ButtonsPanel.js', 'buttonsPanel');
+			//Loader.addComponent('css/positionConsole.css', 'js/PositionConsole.js', 'positionConsole');
+			Loader.addComponent('css/codePopup.css', 'js/CodePopup.js', 'codePopup');
+			Loader.addComponent('css/helpPopup.css', 'js/HelpPopup.js', 'helpPopup');
+			Loader.addComponent('css/vectorialAssetsManager.css', 'js/VectorialAssetsManager.js', 'vectorialsAssetsManager');
+			Loader.addComponent('css/editAssetPopup.css', 'js/EditAssetPopup.js', 'editAssetPopup');
+			Loader.addComponent('css/insertAssetPopup.css', 'js/insertAssetPopup.js', 'insertAssetPopup');
+			
+			// Redéfinir la fonction this.onload
+			Loader.onload = function()
+			{ 
+				Debug.consoleKey = 'Escape';
+				
+				Debug.onError = function($message, $source, $lineno, $colno, $error)
+				{
+					//cancelSave3D();
+					
+				};
+				
+				viewManager = new ViewManager();
+				viewManager.init();
+				viewManager.resize();
+				document.getElementById('main').appendChild(viewManager);
+				viewManager.focus();
+				
+				document.getElementById('main').onDrop = function($event) { Events.emit('onDropFiles', [$event]); };
+				
+				notifCenter = new NotificationsManager();
+				document.getElementById('main').appendChild(notifCenter);
+				
+				progressBar = new ProgressBar(0);
+				//document.getElementById('loadingGif').removeAllChildren();
+				//document.getElementById('loadingGif').appendChild(progressBar);
+
+				Events.onResize = function() { viewManager.resize(); };
+			}; 
+			
+			// On ne lance le chargement du framework que lorsque la page HTML qui héberge l'application a fini de charger
+			window.onload = function()
+			{
+				Loader.load();
+			}; 
+
+			//window.electronAPI.setTitle("POUET ! ");
+
+		</script>
+		
+	</body>
+</html>
