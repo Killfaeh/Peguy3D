@@ -8,7 +8,7 @@ Here is some examples of what you can do with Péguy 3D.</br>
 <img src="./demos/screenshot.png">
 </div></br>
 
-Péguy 3D can assist you to create ambitious scene in your favorite 3D program like Blender.</br>
+Péguy 3D can assist you to create ambitious scenes in your favorite 3D program like Blender.</br>
 
 <div align="center">
 <img src="./demos/buildingsIllustration.jpg">
@@ -96,10 +96,11 @@ If you add new scripts to the project, they will be saved in this directory.</br
 
 To open an existing project, you have to open the project.json file of the project.</br>
 To test your program, you just need to click on the left top double arrow.</br>
-You can export the result in Wavefront (.obj) or Collada (.dae) format file.</br>
-The quick code panel at right help you to write your code faster. Double click on the label or simple click on the copy/paste icon of the row which interests you and a code block will be pasted in your code.</br>
+You can export the result in a Wavefront (.obj) or Collada (.dae) file.</br>
+The quick code panel at right help you to write your code faster. 
+Double click on the label or simple click on the copy/paste icon of the row which interests you and a code block will be pasted in your code.</br>
 
-To add a script in your project, you have to click on the add file icon on the left top near the double arrow. </br>
+To add a script in your project, you have to click on the add file icon on the left top, near the double arrow. </br>
 
 <div align="center">
 <img src="./doc/02-addScript.png">
@@ -121,21 +122,27 @@ Then, to use others scripts in the project call them with the instruction loadSc
 
 ### Insert assets
 
+In the Assets menu, you can open and manage the vectors assets library.</br>
+You can drag and drop SVG files to add assets in the library.</br>
+
 <div align="center">
-<img src="./doc/06-vectorailAssetsLibrary.png">
+<img src="./doc/06-vectorialAssetsLibrary.png">
 </div></br>
+
+Then, you can access your vectors assets in the "Vectors assets" tab in the right panel.</br>
 
 <div align="center">
 <img src="./doc/07-vectorialAssetsLibraryQuickAccess.png">
 </div></br>
 
+Double click on the asset that interests you.</br>
+Then, select one object inside the asset and the type of 3D transformation you want to apply on it.</br>
+
 <div align="center">
 <img src="./doc/08-insertVectorialAsset.png">
 </div></br>
 
-<div align="center">
-<img src="./doc/09-insertVectorialAsset.png">
-</div></br>
+Click on the Ok button and the instruction which builds a 3D object from your vectors asset will be pasted in your code.
 
 ### Built-in documentation
 
