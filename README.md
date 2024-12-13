@@ -1,5 +1,12 @@
 # Péguy 3D
-Péguy 3D is a 3D procedural generation software.
+Péguy 3D is a 3D procedural generation software based on [Electron](https://www.electronjs.org/) and [Péguy.js](https://github.com/Killfaeh/Peguy.js).</br>
+
+Here is some examples of what you can do with Péguy 3D.</br>
+
+<div align="center">
+<img src="./demos/quickStartDemoScreenshot.png"></br>
+<img src="./demos/screenshot.png">
+</div></br>
 
 ## Installation
 
