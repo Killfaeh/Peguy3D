@@ -86,7 +86,7 @@ Run PeguyEditor in a terminal.
 ### Basics
 
 <div align="center">
-<img src="./doc/quickStartDemoScreenshot.png">
+<img src="./demos/quickStartDemoScreenshot.png">
 </div></br>
 
 ### Insert assets
