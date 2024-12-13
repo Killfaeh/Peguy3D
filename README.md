@@ -48,7 +48,7 @@ brew install npm
 
 **Linux**
 
-Open a terminal and run these 2 commands.
+Open a console and run these 2 commands.
 
 ```bash
 sudo apt install nodejs
@@ -69,7 +69,8 @@ Archive content
 
 **Windows**
 
-If you run Péguy 3D for the first time, run install.bat (double clic).</br>
+If you run Péguy 3D for the first time, run install.bat (double clic). 
+A DOS console appears, with a small rotating bar in the top left corner, then disappears when installation is complete.</br>
 Then, run Peguy3D.bat (double clic).
 
 **Mac OS**
@@ -79,7 +80,7 @@ You can put Peguy3D.app in your dock.
 
 **Linux**
 
-Run Peguy3D in a terminal.
+Run Peguy3D in a console.
 
 ## How to use
 
