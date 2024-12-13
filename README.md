@@ -23,7 +23,7 @@ Péguy 3D can assist you to create ambitious scene in your favorite 3D program l
 
 ### Install Node.js
 
-You need to install Node.js to run Péguy Editor.
+You need to install Node.js to run Péguy 3D.
 
 **Windows**
 
@@ -69,17 +69,17 @@ Archive content
 
 **Windows**
 
-If you run Péguy Editor for the first time, run install.bat (double clic).</br>
-Then, run PeguyEditor.bat (double clic).
+If you run Péguy 3D for the first time, run install.bat (double clic).</br>
+Then, run Peguy3D.bat (double clic).
 
 **Mac OS**
 
-Run PeguyEditor.app (double clic).</br>
-You can put PeguyEditor.app in your dock.
+Run Peguy3D.app (double clic).</br>
+You can put Peguy3D.app in your dock.
 
 **Linux**
 
-Run PeguyEditor in a terminal.
+Run Peguy3D in a terminal.
 
 ## How to use
 
