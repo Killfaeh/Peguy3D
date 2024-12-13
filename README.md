@@ -85,9 +85,19 @@ Run PeguyEditor in a terminal.
 
 ### Basics
 
+Here is how look the interface.</br>
+
 <div align="center">
 <img src="./demos/quickStartDemoScreenshot.png">
 </div></br>
+
+A Péguy 3D project is a directory containing a file named project.json and a file named main.js. 
+If you add new scripts to the project, they will be saved in this directory.</br>
+
+To open an existing project, you have to open the project.json file of the project.</br>
+To test your program, you just need to click on the left top double arrow.</br>
+You can export the result in Wavefront (.obj) or Collada (.dae) format file.</br>
+The quick code panel at right help you to write your code faster. Double click on the label or simple click on the copy/paste icon of the row which interests you and a code block will be pasted in your code.</br>
 
 <div align="center">
 <img src="./doc/02-addScript.png">
