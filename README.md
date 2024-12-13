@@ -99,17 +99,21 @@ To test your program, you just need to click on the left top double arrow.</br>
 You can export the result in Wavefront (.obj) or Collada (.dae) format file.</br>
 The quick code panel at right help you to write your code faster. Double click on the label or simple click on the copy/paste icon of the row which interests you and a code block will be pasted in your code.</br>
 
+To add a script in your project, you have to click on the add file icon on the left top near the double arrow. </br>
+
 <div align="center">
 <img src="./doc/02-addScript.png">
 </div></br>
 
-<div align="center">
-<img src="./doc/03-emptyScript.png">
-</div></br>
+Then, enter a name and click on the Ok button.</br>
+
+A common use of the multiscript approach is to create all materials used in the project and store them appart.</br>
 
 <div align="center">
 <img src="./doc/04-materialsScript.png">
 </div></br>
+
+Then, to use others scripts in the project call them with the instruction loadScript('name-of-the-script'); for each additional script in the main script.</br>
 
 <div align="center">
 <img src="./doc/05-includeScript.png">
