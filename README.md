@@ -8,6 +8,12 @@ Here is some examples of what you can do with Péguy 3D.</br>
 <img src="./demos/screenshot.png">
 </div></br>
 
+Péguy 3D can assist you to create ambitious scene in your favorite 3D program like Blender.</br>
+
+<div align="center">
+<img src="./demos/buildingsIllustration.jpg">
+</div>
+
 ## Installation
 
 ### Install Node.js
