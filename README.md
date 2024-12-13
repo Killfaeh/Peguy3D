@@ -14,6 +14,11 @@ Péguy 3D can assist you to create ambitious scene in your favorite 3D program l
 <img src="./demos/buildingsIllustration.jpg">
 </div>
 
+## Table of Contents
+
+1. [Installation](#installation)
+2. [How to use](#how-to-use)
+
 ## Installation
 
 ### Install Node.js
@@ -78,4 +83,18 @@ Run PeguyEditor in a terminal.
 
 ## How to use
 
-Blablabla
+### Basics
+
+<div align="center">
+<img src="./doc/quickStartDemoScreenshot.png">
+</div></br>
+
+### Insert assets
+
+### Built-in documentation
+
+A documentation is available inside Péguy Vectors. You can read it by clicking on the Help menu.</br>
+
+<div align="center">
+<img src="./doc/03-help.png">
+</div></br>
