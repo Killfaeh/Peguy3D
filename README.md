@@ -96,5 +96,5 @@ Run PeguyEditor in a terminal.
 A documentation is available inside Péguy Vectors. You can read it by clicking on the Help menu.</br>
 
 <div align="center">
-<img src="./doc/03-help.png">
+<img src="./doc/10-help.png">
 </div></br>
