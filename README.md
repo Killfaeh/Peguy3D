@@ -89,7 +89,39 @@ Run PeguyEditor in a terminal.
 <img src="./demos/quickStartDemoScreenshot.png">
 </div></br>
 
+<div align="center">
+<img src="./doc/02-addScript.png">
+</div></br>
+
+<div align="center">
+<img src="./doc/03-emptyScript.png">
+</div></br>
+
+<div align="center">
+<img src="./doc/04-materialsScript.png">
+</div></br>
+
+<div align="center">
+<img src="./doc/05-includeScript.png">
+</div></br>
+
 ### Insert assets
+
+<div align="center">
+<img src="./doc/06-vectorailAssetsLibrary.png">
+</div></br>
+
+<div align="center">
+<img src="./doc/07-vectorialAssetsLibraryQuickAccess.png">
+</div></br>
+
+<div align="center">
+<img src="./doc/08-insertVectorialAsset.png">
+</div></br>
+
+<div align="center">
+<img src="./doc/09-insertVectorialAsset.png">
+</div></br>
 
 ### Built-in documentation
 
