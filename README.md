@@ -85,7 +85,7 @@ Run PeguyEditor in a terminal.
 
 ### Basics
 
-Here is how look the interface.</br>
+Here is how looks the interface.</br>
 
 <div align="center">
 <img src="./demos/quickStartDemoScreenshot.png">
@@ -139,7 +139,7 @@ Then, to use others scripts in the project call them with the instruction loadSc
 
 ### Built-in documentation
 
-A documentation is available inside Péguy Vectors. You can read it by clicking on the Help menu.</br>
+A documentation is available inside Péguy 3D. You can read it by clicking on the Help menu.</br>
 
 <div align="center">
 <img src="./doc/10-help.png">
