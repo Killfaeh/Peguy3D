@@ -69,17 +69,19 @@ Archive content
 
 **Windows**
 
-If you run Péguy 3D for the first time, run install.bat (double clic). 
+If you run Péguy 3D for the first time, run install.bat as administrator. 
 A DOS console appears, with a small rotating bar in the top left corner, then disappears when installation is complete.</br>
-Then, run Peguy3D.bat (double clic).
+Then, run Peguy3D.bat as administrator.
 
 **Mac OS**
 
+If you run Péguy 3D for the first time, run Install.app (double clic). 
 Run Peguy3D.app (double clic).</br>
 You can put Peguy3D.app in your dock.
 
 **Linux**
 
+If you run Péguy 3D for the first time, run Install in a console. 
 Run Peguy3D in a console.
 
 ## How to use
