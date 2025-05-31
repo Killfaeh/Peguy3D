@@ -75,13 +75,13 @@ Then, run Peguy3D.bat as administrator.
 
 **Mac OS**
 
-If you run Péguy 3D for the first time, run Install.app (double clic). 
+If you run Péguy 3D for the first time, run Install.app (double clic). </br>
 Run Peguy3D.app (double clic).</br>
 You can put Peguy3D.app in your dock.
 
 **Linux**
 
-If you run Péguy 3D for the first time, run Install in a console. 
+If you run Péguy 3D for the first time, run Install in a console. </br>
 Run Peguy3D in a console.
 
 ## How to use
