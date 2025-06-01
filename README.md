@@ -57,7 +57,7 @@ sudo apt install npm
 
 ### Download and extract the archive
 
-Download the project archive via this Google Drive link : [https://drive.google.com/file/d/1xQL7Gvd9BaBJMBywohQwAKzyukMU2aSs/view?usp=sharing](https://drive.google.com/file/d/1xQL7Gvd9BaBJMBywohQwAKzyukMU2aSs/view?usp=sharing) </br>
+Download the project archive via this Google Drive link : [https://drive.google.com/file/d/10dEBVDQB18mLaXdAPEVy89K-C3vmtm36/view?usp=sharing](https://drive.google.com/file/d/10dEBVDQB18mLaXdAPEVy89K-C3vmtm36/view?usp=sharing)</br>
 Then, extract it.
 
 <div align="center">
@@ -69,17 +69,19 @@ Archive content
 
 **Windows**
 
-If you run Péguy 3D for the first time, run install.bat (double clic). 
+If you run Péguy 3D for the first time, run install.bat as administrator. 
 A DOS console appears, with a small rotating bar in the top left corner, then disappears when installation is complete.</br>
-Then, run Peguy3D.bat (double clic).
+Then, run Peguy3D.bat as administrator.
 
 **Mac OS**
 
+If you run Péguy 3D for the first time, run Install.app (double clic). </br>
 Run Peguy3D.app (double clic).</br>
 You can put Peguy3D.app in your dock.
 
 **Linux**
 
+If you run Péguy 3D for the first time, run Install in a console. </br>
 Run Peguy3D in a console.
 
 ## How to use
