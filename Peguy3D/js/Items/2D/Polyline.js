@@ -9,46 +9,34 @@ function Polyline($points)
     if (!utils.isset(points))
         points = [];
 
-    var curve = new Curve();
+    //*
+    if (!Array.isArray(points) && utils.isset(points.samplePoints))
+		points = points.samplePoints();
+    //*/
+
+    var curve = new Path([]);
 
 	//////////////
 	// Méthodes //
 	//////////////
 
-	this.computeSVG = function()
+    var updatePath = function()
     {
-        /*
-        var pointsSTR = '';
+        curve.setOperations([]);
 
         for (var i = 0; i < points.length; i++)
         {
-            if (i > 0)
-                pointsSTR = pointsSTR + ' ';
-
-            pointsSTR = pointsSTR + points[i][0] + ',' + points[i][1];
+            if (i === 0)
+                curve.moveTo([points[i][0], points[i][1]]);
+            else 
+                curve.lineTo([points[i][0], points[i][1]]);
         }
+    };
 
-        var objectCode = '<polyline points="' + pointsSTR + '" />';
-        //*/
-
-        var pointsSTR = '';
-
-        if (points.length > 0)
-        {
-            pointsSTR = 'M ' + points[0][0] + ',' + points[0][1];
-
-            for (var i = 1; i < points.length; i++)
-                pointsSTR = pointsSTR + ' L' + points[i][0] + ',' + points[i][1];
-            
-            pointsSTR = pointsSTR + ' ';
-        }
-
-        var objectCode = '<path d="' + pointsSTR + '" />';
-
-        var svgObject = new Component(objectCode);
-
-        $this['super'].computeSVG(svgObject);
-
+	this.computeSVG = function computeSVG()
+    {
+        updatePath();
+        var svgObject = $this.execSuper('computeSVG', [], computeSVG);
         return svgObject;
     };
 
@@ -70,17 +58,19 @@ function Polyline($points)
             $this.setGlObject(glObject);
         }
 
-        return $this['super'].compute3D(glObject.getInstance());
+        return $this.computeTransforms(glObject);
     };
 
     this.addPoint = function($x, $y)
     {
         points.push([$x, $y]);
+        updatePath();
     };
 
     this.loadFromAsset = function($assetId, $nodeId)
     {
         // Construire la liste d'opérations depuis un asset
+        updatePath();
     };
 
     this.clone = function()
@@ -103,6 +93,7 @@ function Polyline($points)
     this.setPoints = function($points)
     {
         points = $points;
+        updatePath();
     };
 
     this.points = function($points) { $this.setPoints($points); };
@@ -112,6 +103,7 @@ function Polyline($points)
 	//////////////
 	
 	var $this = utils.extend(curve, this);
+    updatePath();
 	return $this; 
 }
 

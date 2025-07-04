@@ -45,14 +45,14 @@ function Ring($radius1, $radius2, $angle)
 
         if (!utils.isset(glObject))
         {
-			var object = new GLRing(radius1, radius2, angle, 64);
+			var object = new GLRing(radius1, radius2, angle, Doc.resolution);
 			object.setVertexShaderName('vertex-normals');
 			object.setFragmentShaderName('fragment-modeling');
 			glObject = object;
             $this.setGlObject(glObject);
         }
 
-        return $this['super'].compute3D(glObject.getInstance());
+		return $this.computeTransforms(glObject);
     };
 
     this.clone = function()

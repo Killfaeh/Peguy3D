@@ -67,7 +67,7 @@ function Cylinder($radius1, $radius2, $height)
 
         if (!utils.isset(glObject))
         {
-			var thetaResolution = 32;
+			var thetaResolution = Doc.resolution;
 			var heightResolution = 2;
 			var radiusResolution = 2;
 			
@@ -78,7 +78,7 @@ function Cylinder($radius1, $radius2, $height)
             $this.setGlObject(glObject);
         }
 
-        return $this['super'].compute3D(glObject.getInstance());
+		return $this.computeTransforms(glObject);
     };
 
     this.clone = function()

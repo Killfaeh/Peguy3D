@@ -355,6 +355,15 @@ function ViewManager()
 		}
 	};
 
+	this.updatePlugIns = function($plugIns)
+	{
+		for (var i = 0; i < $plugIns.plugIns.length; i++)
+		{
+			var script = utils.create("script", { "type": "text/javascript", "src": $plugIns.plugIns[i] });
+			document.getElementById('main').appendChild(script);
+		}
+	};
+
 	this.updateVectorialAssetManager = function($assets) { vectorialAssetsLibrary.loadAssetList($assets); };
 	//this.update3dAssetManager = function($assets) { threeDAssetsLibrary.loadAssetList($assets); };
 
@@ -500,7 +509,10 @@ function ViewManager()
 			var materials = [];
 
 			for (var key in MATERIALS)
-				materials.push(MATERIALS[key].getJSON());
+			{
+				if (MATERIALS[key].getJSON)
+					materials.push(MATERIALS[key].getJSON());
+			}
 
 			const file = await window.electronAPI.exportToOBJ(materials, objData);
 

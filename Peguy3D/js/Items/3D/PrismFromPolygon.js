@@ -38,6 +38,11 @@ function PrismFromPolygon($verticesList, $height, $axis)
 	if (!utils.isset(verticesList))
 		verticesList = [];
 
+	//*
+	if (!Array.isArray(verticesList) && utils.isset(verticesList.samplePoints))
+		verticesList = verticesList.samplePoints();
+	//*/
+
 	/*
 	if (!utils.isset(bottomClosed))
 		bottomClosed = true;
@@ -87,19 +92,8 @@ function PrismFromPolygon($verticesList, $height, $axis)
 
         if (!utils.isset(glObject))
         {
-			var glPointsList = [];
-
-            for (var i = 0; i < verticesList.length; i++)
-                glPointsList.push({x: verticesList[i][0], y: verticesList[i][1]});
-
 			var heightResolution = 2;
-			
-			console.log("POUET ! 2");
-			console.log(glPointsList);
-			console.log(radius1);
-			console.log(radius2);
-
-            var object = new GLPrismFromPolygon(radius1, radius2, height, deltaX, deltaY, glPointsList, heightResolution, bottomClosed, topClosed, 0, axis);
+            var object = new GLPrismFromPolygon(radius1, radius2, height, deltaX, deltaY, verticesList, heightResolution, bottomClosed, topClosed, 0, axis);
 			//object.debug();
             object.setVertexShaderName('vertex-material');
             object.setFragmentShaderName('fragment-material');
@@ -107,7 +101,7 @@ function PrismFromPolygon($verticesList, $height, $axis)
             $this.setGlObject(glObject);
         }
 
-		return $this.execSuper('compute3D', [glObject.getInstance()]);
+		return $this.computeTransforms(glObject);
     };
 
     this.clone = function()

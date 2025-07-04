@@ -8,7 +8,7 @@ function Ellipse($rX, $rY)
     var rY = $rY;
     var angle = 360.0;
 	var radiusResolution = 10;
-	var thetaResolution = 64;
+	var thetaResolution = Doc.resolution;
 
     if (!utils.isset(rX))
         rX = 1.0;
@@ -16,21 +16,25 @@ function Ellipse($rX, $rY)
     if (!utils.isset(rY))
         rY = 1.0;
 
-    var curve = new Curve();
+    var curve = new Path([]);
 
 	//////////////
 	// Méthodes //
 	//////////////
 
-	this.computeSVG = function()
+    var updatePath = function()
     {
-        //var objectCode = '<ellipse cx="0" cy="0" rx="' + rX + '" ry="' + rY + '" />';
-        var objectCode = '<path d="M -' + rX + ' 0 A ' + rX + ' ' + rY + ' 0 0 0 ' + rX + ' 0 A ' + rX + ' ' + rY + ' 0 0 0 -' + rX + ' 0 Z" />';
+		curve.setOperations([]);
+		curve.moveTo([-rX, 0.0]);
+		curve.arc([rX, rY], 0, 0, 0, [rX, 0]);
+		curve.arc([rX, rY], 0, 0, 0, [-rX, 0]);
+		curve.close();
+    };
 
-        var svgObject = new Component(objectCode);
-
-        $this['super'].computeSVG(svgObject);
-
+	this.computeSVG = function computeSVG()
+    {
+        updatePath();
+        var svgObject = $this.execSuper('computeSVG', [], computeSVG);
         return svgObject;
     };
 
@@ -50,7 +54,7 @@ function Ellipse($rX, $rY)
             $this.setGlObject(glObject);
         }
 
-        return $this['super'].compute3D(glObject.getInstance());
+        return $this.computeTransforms(glObject);
     };
 
     this.clone = function()
@@ -81,6 +85,8 @@ function Ellipse($rX, $rY)
         
         if (!utils.isset(rY))
             rY = 50;
+
+        updatePath();
     };
 
     this.radius = function($rX, $rY) { $this.setRadius($rX, $rY); };
@@ -90,6 +96,7 @@ function Ellipse($rX, $rY)
 	//////////////
 	
 	var $this = utils.extend(curve, this);
+    updatePath();
 	return $this; 
 }
 

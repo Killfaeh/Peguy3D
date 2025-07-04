@@ -11,26 +11,34 @@ function Square($size)
 
     var round = 0;
 
-	var curve = new Curve();
+	var curve = new Path([]);
 
 	//////////////
 	// Méthodes //
 	//////////////
 
-	this.computeSVG = function()
+    var updatePath = function()
     {
-        //var objectCode = '<rect x="' + -size/2 + '" y="' + -size/2 + '" width="' + size + '" height="' + size + '" rx="' + round + '" ry="' + round + '" />';
-        var objectCode = '<path d="M -' + (size/2) + ' -' + (size/2) + ' L ' + (size/2) + ' -' + (size/2) + ' L ' + (size/2) + ' ' + (size/2) + ' L -' + (size/2) + ' ' + (size/2)+ ' L -' + (size/2) + ' -' + (size/2) + ' Z" />';
+        // Faudra ajouter les coins arrondis ! 
+        curve.setOperations([]);
+        curve.moveTo([-size/2, -size/2]);
+        curve.lineTo([size/2, -size/2]);
+        curve.lineTo([size/2, size/2]);
+        curve.lineTo([-size/2, size/2]);
+        curve.close();
+    };
 
-        var svgObject = new Component(objectCode);
-
-        $this['super'].computeSVG(svgObject);
-
+	this.computeSVG = function computeSVG()
+    {
+        updatePath();
+        var svgObject = $this.execSuper('computeSVG', [], computeSVG);
         return svgObject;
     };
 
     this.compute3D = function()
     {
+        // Faudra ajouter les coins arrondis ! 
+
         var glObject = $this.getGlObject();
 
         if (!utils.isset(glObject))
@@ -42,7 +50,7 @@ function Square($size)
             $this.setGlObject(glObject);
         }
 
-        return $this['super'].compute3D(glObject.getInstance());
+        return $this.computeTransforms(glObject);
     };
 
     this.clone = function()
@@ -70,6 +78,8 @@ function Square($size)
 
         if (!utils.isset(size))
             size = 100;
+
+        updatePath();
     };
 
     this.size = function($size) { $this.setSize($size); };
@@ -77,6 +87,7 @@ function Square($size)
     this.setRound = function($round)
     {
         round = $round;
+        updatePath();
     };
 
     this.round = function($round) { $this.setRound($round); };
@@ -96,6 +107,7 @@ function Square($size)
 	//////////////
 	
 	var $this = utils.extend(curve, this);
+    updatePath();
 	return $this; 
 }
 

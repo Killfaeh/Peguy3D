@@ -1,3 +1,9 @@
+SPHERE_TYPES = 
+{
+	UV: 0,
+	CUBOID: 1,
+	OCTAHEDRIC: 2
+};
 
 //function Sphere($radius, $angleTheta, $anglePhi, $offsetAnglePhi)
 function Sphere($radius)
@@ -5,6 +11,8 @@ function Sphere($radius)
 	///////////////
 	// Attributs //
 	///////////////
+
+	var mapping = SPHERE_TYPES.UV;
 
     var radius = $radius;
     var angleTheta = 360.0;
@@ -48,8 +56,8 @@ function Sphere($radius)
 
         if (!utils.isset(glObject))
         {
-			var thetaResolution = 32;
-			var phiResolution = 32;
+			var thetaResolution = Doc.resolution;
+			var phiResolution = Doc.resolution;
 
 			var object = new GLUVSphere(radius, angleTheta, anglePhi, offsetAnglePhi, thetaResolution, phiResolution);
 			object.setVertexShaderName('vertex-material');
@@ -58,7 +66,7 @@ function Sphere($radius)
             $this.setGlObject(glObject);
         }
 
-        return $this['super'].compute3D(glObject.getInstance());
+		return $this.computeTransforms(glObject);
     };
 
     this.clone = function()
@@ -74,12 +82,15 @@ function Sphere($radius)
 
 	// GET
 	
+	this.getMapping = function() { return mapping; };
 	this.getRadius = function() { return radius; };
 	this.getAngleTheta = function() { return angleTheta; };
 	this.getAnglePhi = function() { return anglePhi; };
 	this.getOffsetAnglePhi = function() { return offsetAnglePhi; };
 
 	// SET
+
+	this.setMapping = function($mapping) { mapping = $mapping; };
 	
     this.setRadius = function($radius)
     {

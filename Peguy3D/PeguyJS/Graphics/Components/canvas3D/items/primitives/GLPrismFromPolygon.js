@@ -71,7 +71,7 @@ function GLPrismFromPolygon($radius1, $radius2, $height, $deltaX, $deltaY, $vert
 
 		if (bottomClosed === true)
 		{
-			var polygon1 = new GLPolygon($verticesList, false, axis);
+			var polygon1 = new GLPolygon($verticesList, axis, false);
 			polygon1.setScale(scale1);
 
 			if (axis === 'x')
@@ -99,7 +99,7 @@ function GLPrismFromPolygon($radius1, $radius2, $height, $deltaX, $deltaY, $vert
 
 		if (topClosed === true)
 		{
-			var polygon2 = new GLPolygon($verticesList, false, axis);
+			var polygon2 = new GLPolygon($verticesList, axis, false);
 			polygon2.setScale(scale2);
 
 			if (axis === 'x')

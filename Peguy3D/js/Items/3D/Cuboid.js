@@ -47,7 +47,7 @@ function Cuboid($widthX, $widthY, $widthZ)
             $this.setGlObject(glObject);
         }
 
-        return $this['super'].compute3D(glObject.getInstance());
+		return $this.computeTransforms(glObject);
     };
 
     this.clone = function()

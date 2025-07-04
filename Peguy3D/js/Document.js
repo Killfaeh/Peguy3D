@@ -117,6 +117,7 @@ function Document()
 
 				newTab.onSelect = function($tab) { $tab.getContent().restoreScroll(); };
 
+				newCodeEditor.onPaste = function($code) { return pasteCode($code); };
 				newCodeEditor.onChange = function($code) { onChange($code); };
 
 				$this.setSaved(false);
@@ -166,6 +167,8 @@ function Document()
 			scriptParent.removeChild(script);
 		
 		Doc.empty();
+		Doc.resolution = 32;
+		Doc.tolerance = Math.pow(10, -PEGUY.glPrecision);
 		viewManager.refresh();
 
 		script = new Component('<script type="text/javascript" >var scriptToExec = function() { ' + code + '\n};\n try { scriptToExec();\nviewManager.emptyError();\nviewManager.refresh(); }\ncatch($error) { viewManager.displayError($error); } </script>');
@@ -246,6 +249,43 @@ function Document()
 		}
 	};
 
+	var pasteCode = function($code)
+	{
+		var code = $code;
+
+		if (/^<\?xml/.test($code) || /<\/[a-zA-Z]+>/.test($code) || /<[^<]+\/>/.test($code))
+		{
+			console.log("Traitement SVG");
+
+			var code = '';
+
+			$code = $code.replaceAll('\n', '').replaceAll('\r', '').replaceAll('\t', '');
+			$code = $code.replace(/^<\?xml[^<]*>/, '');
+			$code = $code.replace(/^<!DOCTYPE[^<]*>/, '');
+
+			if (!/^<svg/.test($code))
+				$code = '<svg viewBox="0 0 1000 1000" >' + $code + '</svg>';
+
+			console.log($code);
+
+			var b64Code = btoa($code);
+
+			var flatSVG = VectorUtils.flatSVGtree(b64Code);
+
+			for (var i = 0; i < flatSVG.length; i++)
+			{
+				var svgNode = new Component(flatSVG[i].code);
+				var subCode = VectorUtils.svgNodeToCode(svgNode);
+				subCode = subCode.replaceAll('wire', 'wire' + i);
+				code = code + subCode + '\n\r';
+			}
+
+			console.log(code);
+		}
+
+		return code;
+	};
+
 	this.restoreScroll = function()
 	{
 		var selectedTab = tabManager.getSelected();
@@ -288,6 +328,7 @@ function Document()
 	};
 
 	//this.onKeyDown = function($event) { mainScriptEditor.onKeyDown($event); };
+	mainScriptEditor.onPaste = function($code) { return pasteCode($code); };
 	mainScriptEditor.onChange = function($code) { onChange($code); };
 
 	////////////////
@@ -357,11 +398,11 @@ function Document()
 			var x = normals[j*3];
 			var y = normals[j*3+1];
 			var z = normals[j*3+2];
-			var outputVector = rotateMatrix.multiplyVect([x, y, z, 1.0]);
-			outputVector = Math.normalizeVector(outputVector);
-			objData.vn.push(outputVector[0]);
-			objData.vn.push(outputVector[1]);
-			objData.vn.push(outputVector[2]);
+			var outputVector = new Vector(rotateMatrix.multiplyVect([x, y, z, 1.0]));
+			outputVector = outputVector.normalize();
+			objData.vn.push(outputVector.values()[0]);
+			objData.vn.push(outputVector.values()[1]);
+			objData.vn.push(outputVector.values()[2]);
 		}
 
 		return objData;
@@ -384,15 +425,25 @@ function Document()
 		var libraryGeometries = '	<library_geometries>\n';
 		var libraryScenes = '	<library_visual_scenes>\n		<visual_scene id="Scene" name="Scene">\n';
 
+		console.log(MATERIALS);
+
 		for (var key in MATERIALS)
 		{
-			var matColladaData = MATERIALS[key].getGLMaterial().getCOLLADAdata();
-			libraryEffectCode = libraryEffectCode + matColladaData.effectCode;
-			libraryMaterials = libraryMaterials + matColladaData.materialCode;
+			if (MATERIALS[key].getGLMaterial)
+			{
+				var matColladaData = MATERIALS[key].getGLMaterial().getCOLLADAdata();
+				libraryEffectCode = libraryEffectCode + matColladaData.effectCode;
+				libraryMaterials = libraryMaterials + matColladaData.materialCode;
+			}
 		}
 
+		console.log(COLLADA_MESH);
+
 		for (var key in COLLADA_MESH)
-			libraryGeometries = libraryGeometries + COLLADA_MESH[key].geometryCode;
+		{
+			if (COLLADA_MESH[key].geometryCode)
+				libraryGeometries = libraryGeometries + COLLADA_MESH[key].geometryCode;
+		}
 
 		for (var i = 0; i < colladaInstanceList.length; i++)
 		{
@@ -501,6 +552,7 @@ function Document()
 				};
 
 				newCodeEditor.setCode($code[key]);
+				newCodeEditor.onPaste = function($code) { return pasteCode($code); };
 				newCodeEditor.onChange = function($code) { onChange($code); };
 			}
 		}

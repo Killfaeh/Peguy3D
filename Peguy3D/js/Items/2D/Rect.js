@@ -16,21 +16,27 @@ function Rect($width, $height)
     var roundX = 0;
     var roundY = 0;
 
-	var curve = new Curve();
+	var curve = new Path([]);
 
 	//////////////
 	// Méthodes //
 	//////////////
 
-	this.computeSVG = function()
+    var updatePath = function()
     {
-        //var objectCode = '<rect x="' + -width/2 + '" y="' + -height/2 + '" width="' + width + '" height="' + height + '" rx="' + roundX + '" ry="' + roundY + '" />';
-        var objectCode = '<path d="M -' + (width/2) + ' -' + (height/2) + ' L ' + (width/2) + ' -' + (height/2) + ' L ' + (width/2) + ' ' + (height/2) + ' L -' + (width/2) + ' ' + (height/2)+ ' L -' + (width/2) + ' -' + (height/2) + ' Z" />';
+        // Faudra ajouter les coins arrondis ! 
+        curve.setOperations([]);
+        curve.moveTo([-width/2, -height/2]);
+        curve.lineTo([width/2, -height/2]);
+        curve.lineTo([width/2, height/2]);
+        curve.lineTo([-width/2, height/2]);
+        curve.close();
+    };
 
-        var svgObject = new Component(objectCode);
-
-        $this['super'].computeSVG(svgObject);
-
+    this.computeSVG = function computeSVG()
+    {
+        updatePath();
+        var svgObject = $this.execSuper('computeSVG', [], computeSVG);
         return svgObject;
     };
 
@@ -47,7 +53,7 @@ function Rect($width, $height)
             $this.setGlObject(glObject);
         }
 
-        return $this['super'].compute3D(glObject.getInstance());
+        return $this.computeTransforms(glObject);
     };
 
     this.clone = function()
@@ -81,6 +87,8 @@ function Rect($width, $height)
         
         if (!utils.isset(height))
             height = 100;
+
+        updatePath();
     };
 
     this.size = function($width, $height) { $this.setSize($width, $height); };
@@ -89,6 +97,7 @@ function Rect($width, $height)
     {
         roundX = $roundX;
         roundY = $roundY;
+        updatePath();
     };
 
     this.round = function($roundX, $roundY) { $this.setRound($roundX, $roundY); };
@@ -98,6 +107,7 @@ function Rect($width, $height)
 	//////////////
 	
 	var $this = utils.extend(curve, this);
+    updatePath();
 	return $this; 
 }
 

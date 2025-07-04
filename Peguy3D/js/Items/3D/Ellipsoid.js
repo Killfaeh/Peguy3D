@@ -40,7 +40,7 @@ function Ellipsoid($radiusX, $radiusY, $radiusZ)
 
         if (!utils.isset(glObject))
         {
-			var resolution = 32;
+			var resolution = Doc.resolution;
 
 			var object = new GLUVEllipsoid(radiusX, radiusY, radiusZ, resolution);
 			object.setVertexShaderName('vertex-material');
@@ -49,7 +49,7 @@ function Ellipsoid($radiusX, $radiusY, $radiusZ)
             $this.setGlObject(glObject);
         }
 
-        return $this['super'].compute3D(glObject.getInstance());
+        return $this.computeTransforms(glObject);
     };
 
     this.clone = function()

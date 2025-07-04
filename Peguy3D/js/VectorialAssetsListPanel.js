@@ -50,6 +50,9 @@ function VectorialAssetsListPanel()
 
 				var item = new ListItem(itemHTML);
 
+				assetList[i].width = assetList[i].viewBox.replace(/^[0-9]+ [0-9]+ /, '').replace(/ [0-9]+$/, '');
+				assetList[i].height = assetList[i].viewBox.replace(/^[0-9]+ [0-9]+ [0-9]+ /, '');
+
 				item.asset = assetList[i];
 				item.id = assetList[i].id;
 				item.flatTree = assetList[i].flatTree;

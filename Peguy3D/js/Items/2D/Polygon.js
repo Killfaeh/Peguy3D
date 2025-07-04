@@ -10,32 +10,39 @@ function Polygon($points, $axis)
     if (!utils.isset(points))
         points = [];
 
-    var curve = new Curve();
+    //*
+    if (!Array.isArray(points) && utils.isset(points.samplePoints))
+		points = points.samplePoints();
+    //*/
+
+    if (!utils.isset(axis))
+        axis = 'z';
+
+    var curve = new Path([]);
 
 	//////////////
 	// Méthodes //
 	//////////////
 
-	this.computeSVG = function()
+    var updatePath = function()
     {
-        var pointsSTR = '';
+        curve.setOperations([]);
 
-        if (points.length > 0)
+        for (var i = 0; i < points.length; i++)
         {
-            pointsSTR = 'M ' + points[0][0] + ',' + points[0][1];
-
-            for (var i = 1; i < points.length; i++)
-                pointsSTR = pointsSTR + ' L' + points[i][0] + ',' + points[i][1];
-            
-            pointsSTR = pointsSTR + ' Z';
+            if (i === 0)
+                curve.moveTo([points[i][0], points[i][1]]);
+            else 
+                curve.lineTo([points[i][0], points[i][1]]);
         }
 
-        var objectCode = '<path d="' + pointsSTR + '" />';
+        curve.close();
+    };
 
-        var svgObject = new Component(objectCode);
-
-        $this['super'].computeSVG(svgObject);
-
+	this.computeSVG = function computeSVG()
+    {
+        updatePath();
+        var svgObject = $this.execSuper('computeSVG', [], computeSVG);
         return svgObject;
     };
 
@@ -45,24 +52,20 @@ function Polygon($points, $axis)
 
         if (!utils.isset(glObject))
         {
-            var glPointsList = [];
-
-            for (var i = 0; i < points.length; i++)
-                glPointsList.push({x: points[i][0], y: points[i][1]});
-
-            var object = new GLPolygon(glPointsList, false, axis);
+            var object = new GLPolygon(points, axis, false);
             object.setVertexShaderName('vertex-material');
             object.setFragmentShaderName('fragment-material');
             glObject = object;
             $this.setGlObject(glObject);
         }
 
-        return $this['super'].compute3D(glObject.getInstance());
+        return $this.computeTransforms(glObject);
     };
 
     this.addPoint = function($x, $y)
     {
         points.push([$x, $y]);
+        updatePath();
     };
 
     this.loadFromAsset = function($assetId, $nodeId)
@@ -70,6 +73,7 @@ function Polygon($points, $axis)
         var path = new Path();
 		path.loadFromAsset($assetId, $nodeId);
 		points = path.samplePoints();
+        updatePath();
     };
 
     this.clone = function()
@@ -92,6 +96,7 @@ function Polygon($points, $axis)
     this.setPoints = function($points)
     {
         points = $points;
+        updatePath();
     };
 
     this.points = function($points) { $this.setPoints($points); };
@@ -101,6 +106,7 @@ function Polygon($points, $axis)
 	//////////////
 	
 	var $this = utils.extend(curve, this);
+    updatePath();
 	return $this; 
 }
 

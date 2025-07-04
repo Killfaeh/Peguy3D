@@ -1,5 +1,7 @@
 Doc = 
 {
+    resolution: 32,
+    tolerance: Math.pow(10, -PEGUY.glPrecision),
     elementsList: [],
     transformList: [],
 
@@ -12,9 +14,12 @@ Doc =
         }
         else
         {
+            console.log("Add to Doc : ");
             console.log($input);
 
             var type = $input.getType();
+
+            console.log("Type : " + $input.getType);
 
             if (type === 'object' || type === 'curve')
                 Doc.elementsList.push($input);

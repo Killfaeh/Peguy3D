@@ -8,15 +8,18 @@ function Extrusion($verticesList, $height, $axis)
 	var verticesList = $verticesList;
 	var axis = $axis;
 
+	if (!utils.isset(verticesList))
+		verticesList = [];
+
+	//*
+	if (!Array.isArray(verticesList) && utils.isset(verticesList.samplePoints))
+		verticesList = verticesList.samplePoints();
+	//*/
+
 	if (!utils.isset(height))
 		height = 2.0;
 
-	var glPointsList = [];
-
-    for (var i = 0; i < verticesList.length; i++)
-        glPointsList.push({x: verticesList[i][0], y: verticesList[i][1]});
-
-	var polygon = new MathPolygon(glPointsList);
+	var polygon = new MathPolygon(verticesList);
 	var centroid = polygon.getCentroid();
 	var maxRadius = polygon.getMaxRadius();
 
@@ -40,16 +43,7 @@ function Extrusion($verticesList, $height, $axis)
         var path = new Path();
 		path.loadFromAsset($assetId, $nodeId);
 		verticesList = path.samplePoints();
-
-		var glPointsList = [];
-
-    	for (var i = 0; i < verticesList.length; i++)
-        	glPointsList.push({x: verticesList[i][0], y: verticesList[i][1]});
-
-		//console.log("LOAD ASSET");
-		//console.log(glPointsList);
-
-		var polygon = new MathPolygon(glPointsList);
+		var polygon = new MathPolygon(verticesList);
 		var centroid = polygon.getCentroid();
 		var maxRadius = polygon.getMaxRadius();
 

@@ -41,13 +41,12 @@ function Object3D()
         //$svgObject.setAttributeNS(null, 'style', 'fill: ' + fillColor + '; stroke: ' + borderColor + '; stroke-width: ' + borderWidth + 'px;');
     };
 
-    this.compute3D = function($glObject)
+    this.computeTransforms = function($glObject)
     {
         if (utils.isset($glObject) && $glObject.getType() === 'instance' && utils.isset($glObject.getObject().setMaterial))
-        {
-            console.log(material.getName());
             $glObject.getObject().setMaterial(material.getGLMaterial());
-        }
+        else if (utils.isset($glObject.setMaterial))
+            $glObject.setMaterial(material.getGLMaterial());
 
         var groupList = [];
 
@@ -72,6 +71,13 @@ function Object3D()
         }
 
         return outputGroup;
+    };
+
+    this.compute3D = function($glObject)
+    {
+        console.log("Object3D");
+
+        return $this.computeTransforms($glObject);
     };
 
     this.instancesToPoints = function($points)

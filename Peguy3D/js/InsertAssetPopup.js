@@ -7,7 +7,9 @@ function InsertAssetPopup($asset)
 	var asset = $asset;
 	var selected = null;
 
-	var svgCode = '<svg id="svg" viewBox="' + asset.viewBox + '" >';
+	console.log(asset);
+
+	var svgCode = '<svg id="svg" viewBox="' + asset.viewBox + '" style="width: ' + asset.width + 'px; height: ' + asset.height + 'px; " >';
 
 	for (var i = 0; i < asset.flatTree.length; i++)
 		svgCode = svgCode + asset.flatTree[i].code;
@@ -15,13 +17,23 @@ function InsertAssetPopup($asset)
 	svgCode = svgCode + '</svg>';
 
 	var popupHTML = '<h2>Insert asset</h2>'
-						+ '<div>'
-							+ '<div class="insertSettingsPanel" >'
-								+ '<div class="preview" >' + svgCode + '</div>'
-								+ '<div style="margin-top: 20px;" >Insert as <span id="typeComboBox" ></span></div>'
-							+ '</div>'
-							+ '<div id="elementsList" class="elementsList" ></div>'
-						+ '</div>';
+						+ '<table>'
+							+ '<tr>'
+								+ '<td>'
+									+ '<div class="insertSettingsPanel" >'
+										+ '<div class="preview" >' + svgCode + '</div>'
+									+ '</div>'
+								+ '</td>'
+								+ '<td>'
+									+ '<div id="elementsList" class="elementsList" >'
+									+ '</div>'
+								+ '</td>'
+							+ '</tr>'
+							+ '<tr>'
+								+ '<td style="text-align: left; " >Insert as <span id="typeComboBox" ></span></td>'
+								+ '<td style="text-align: right; " >Convert to code <span id="convertToCodeCheckBox" ></span></td>'
+							+ '</tr>'
+						+ '</table>';
 	
 	var popup = new ConfirmPopup(popupHTML);
 	
@@ -44,6 +56,8 @@ function InsertAssetPopup($asset)
 		var item = new ListItem(itemHTML);
 
 		item.id = asset.flatTree[i].id;
+		item.code = asset.flatTree[i].code;
+		item.node = asset.flatTree[i];
 		//item.flatTree = assetList[i].flatTree;
 
 		item.onClick = function($event)
@@ -68,8 +82,10 @@ function InsertAssetPopup($asset)
 	];
 
 	var comboBoxTypes = new ComboBox("insert_type", optionsTypes, "path", false);
-
 	popup.getById('typeComboBox').appendChild(comboBoxTypes);
+
+	var convertToCodeCheckBox = new CheckBox(false, 25);
+	popup.getById("convertToCodeCheckBox").appendChild(convertToCodeCheckBox);
 	
 	//////////////
 	// Méthodes //
@@ -108,33 +124,60 @@ function InsertAssetPopup($asset)
 		{
 			var type = comboBoxTypes.getCurrentValue();
 
-			/*
-			if (type === 'polyline')
+			if (convertToCodeCheckBox.isChecked() === true)
 			{
-				code = code + 'var polyline = new Polyline();\n\r';
-				code = code + 'polyline.loadFromAsset("' + asset.id + '", "' + selected.id + '");\n\r';
+				console.log("COUCOU ! ");
+				//console.log(selected);
+				console.log(selected.code);
+				//console.log(selected.node);
+
+				var svgNode = new Component(selected.code);
+
+				console.log(svgNode);
+
+				code = VectorUtils.svgNodeToCode(svgNode);
+
+				if (type === 'extrusion')
+				{
+					code = code + 'var extrusion = new Extrusion(wire.samplePoints(), 2.0, "z");\n\r';
+				}
+				else if (type === 'revolution')
+				{
+					code = code + 'var revolution = new Revolution(wire.samplePoints(), 32, 30.0);\n\r';
+					code = code + 'revolution.setAngle(360.0);\n\r';
+				}
 			}
-			else //*/
-			if (type === 'polygon')
+			else
 			{
-				code = code + 'var polygon = new Polygon();\n\r';
-				code = code + 'polygon.loadFromAsset("' + asset.id + '", "' + selected.id + '");\n\r';
-			}
-			else if (type === 'path')
-			{
-				code = code + 'var path = new Path();\n\r';
-				code = code + 'path.loadFromAsset("' + asset.id + '", "' + selected.id + '");\n\r';
-				code = code + 'path.close();\n\r';
-			}
-			else if (type === 'extrusion')
-			{
-				code = code + 'var extrusion = new Extrusion([], 2.0);\n\r';
-				code = code + 'extrusion.loadFromAsset("' + asset.id + '", "' + selected.id + '");\n\r';
-			}
-			else if (type === 'revolution')
-			{
-				code = code + 'var revolution = new Revolution([], 360.0, "", 32);\n\r';
-				code = code + 'revolution.loadFromAsset("' + asset.id + '", "' + selected.id + '");\n\r';
+				/*
+				if (type === 'polyline')
+				{
+					code = code + 'var polyline = new Polyline();\n\r';
+					code = code + 'polyline.loadFromAsset("' + asset.id + '", "' + selected.id + '");\n\r';
+				}
+				else //*/
+				if (type === 'polygon')
+				{
+					code = code + 'var polygon = new Polygon();\n\r';
+					code = code + 'polygon.loadFromAsset("' + asset.id + '", "' + selected.id + '");\n\r';
+				}
+				else if (type === 'path')
+				{
+					code = code + 'var path = new Path();\n\r';
+					code = code + 'path.loadFromAsset("' + asset.id + '", "' + selected.id + '");\n\r';
+					code = code + 'path.close();\n\r';
+				}
+				else if (type === 'extrusion')
+				{
+					code = code + 'var extrusion = new Extrusion([], 2.0, "z");\n\r';
+					code = code + 'extrusion.loadFromAsset("' + asset.id + '", "' + selected.id + '");\n\r';
+				}
+				else if (type === 'revolution')
+				{
+					code = code + 'var revolution = new Revolution([], 32, 30.0);\n\r';
+					code = code + 'revolution.setAngle(360.0);\n\r';
+					code = code + 'revolution.loadFromAsset("' + asset.id + '", "' + selected.id + '");\n\r';
+				}
 			}
 		}
 

@@ -7,28 +7,32 @@ function Circle($radius)
     var radius = $radius;
 	var angle = 360.0;
 	var radiusResolution = 10;
-	var thetaResolution = 64;
+	var thetaResolution = Doc.resolution;
 	
 	if (!utils.isset(radius))
         radius = 1.0;
 	else if (radius <= 0.0)
 		radius = 0.000001;
 
-	var curve = new Curve();
+	var curve = new Path([]);
 
 	//////////////
 	// Méthodes //
 	//////////////
 
-	this.computeSVG = function()
+	var updatePath = function()
     {
-        //var objectCode = '<circle cx="0" cy="0" r="' + radius + '" />';
-		var objectCode = '<path d="M -' + radius + ' 0 A ' + radius + ' ' + radius + ' 0 0 0 ' + radius + ' 0 A ' + radius + ' ' + radius + ' 0 0 0 -' + radius + ' 0 Z" />';
+		curve.setOperations([]);
+		curve.moveTo([-radius, 0.0]);
+		curve.arc([radius, radius], 0, 0, 0, [radius, 0]);
+		curve.arc([radius, radius], 0, 0, 0, [-radius, 0]);
+		//curve.close();
+    };
 
-        var svgObject = new Component(objectCode);
-
-        $this['super'].computeSVG(svgObject);
-
+	this.computeSVG = function computeSVG()
+    {
+        updatePath();
+        var svgObject = $this.execSuper('computeSVG', [], computeSVG);
         return svgObject;
     };
 
@@ -46,7 +50,7 @@ function Circle($radius)
             $this.setGlObject(glObject);
         }
 
-        return $this['super'].compute3D(glObject.getInstance());
+		return $this.computeTransforms(glObject);
     };
 
     this.clone = function()
@@ -72,6 +76,8 @@ function Circle($radius)
 
         if (!utils.isset(radius))
             radius = 1.0;
+
+		updatePath();
     };
 
     this.radius = function($radius) { $this.setRadius($radius); };
@@ -81,6 +87,7 @@ function Circle($radius)
 	//////////////
 	
 	var $this = utils.extend(curve, this);
+	updatePath();
 	return $this; 
 }
 

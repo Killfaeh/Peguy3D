@@ -1,6 +1,6 @@
 
 //function PyramidFromPolygon($radius, $height, $deltaX, $deltaY, $verticesList, $bottomClosed)
-function PyramidFromPolygon($verticesList, $height)
+function PyramidFromPolygon($verticesList, $height, $axis)
 {
 	///////////////
 	// Attributs //
@@ -32,10 +32,20 @@ function PyramidFromPolygon($verticesList, $height)
 	if (!utils.isset(verticesList))
 		verticesList = [];
 
+	//*
+	if (!Array.isArray(verticesList) && utils.isset(verticesList.samplePoints))
+		verticesList = verticesList.samplePoints();
+	//*/
+
 	/*
 	if (!utils.isset(bottomClosed))
 		bottomClosed = true;
 	//*/
+
+	var axis = $axis;
+
+	if (axis !== 'x' && axis !== 'y' && axis !== 'z')
+		axis = 'z';
 
 	var object3D = new Object3D();
 
@@ -75,18 +85,9 @@ function PyramidFromPolygon($verticesList, $height)
 
         if (!utils.isset(glObject))
         {
-			var glPointsList = [];
-
-            for (var i = 0; i < verticesList.length; i++)
-                glPointsList.push({x: verticesList[i][0], y: verticesList[i][1]});
-
 			var heightResolution = 2;
-			
-			console.log("POUET ! 2");
-			console.log(glPointsList);
-			console.log(radius);
 
-            var object = new GLPyramidFromPolygon(radius, height, deltaX, deltaY, glPointsList, heightResolution, bottomClosed);
+            var object = new GLPyramidFromPolygon(radius, height, deltaX, deltaY, verticesList, heightResolution, bottomClosed, 0, axis);
 			object.debug();
             object.setVertexShaderName('vertex-material');
             object.setFragmentShaderName('fragment-material');
@@ -94,12 +95,12 @@ function PyramidFromPolygon($verticesList, $height)
             $this.setGlObject(glObject);
         }
 
-		return $this.execSuper('compute3D', [glObject.getInstance()]);
+		return $this.computeTransforms(glObject);
     };
 
     this.clone = function()
 	{
-		var clone = new PyramidFromPolygon(radius, height, deltaX, deltaY, verticesList, bottomClosed);
+		var clone = new PyramidFromPolygon(verticesList, height, axis);
 		clone.setTransformList(clone.getTransformList());
 		return clone;
 	};

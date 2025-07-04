@@ -12,6 +12,11 @@ function Curve()
 	// Méthodes //
 	//////////////
 
+    this.borderToPath = function($width)
+    {
+        return new Path([]);
+    };
+
     // https://developer.mozilla.org/en-US/docs/Web/API/SVGGeometryElement
 
     this.totalLength = function()
@@ -40,12 +45,24 @@ function Curve()
 
     this.samplePoints = function($n)
     {
+        if (!utils.isset($n))
+            $n = 32;
+        
+        if ($n < 2)
+            $n = 2;
+
         var svgObject = $this.computeSVG();
         return svgObject.samplePoints($n);
     };
 
     this.samplePointsWithProperties = function($n)
     {
+        if (!utils.isset($n))
+            $n = 32;
+        
+        if ($n < 2)
+            $n = 2;
+        
         var svgObject = $this.computeSVG();
         return svgObject.samplePointsForWebGL($n);
     };

@@ -59,7 +59,7 @@ function Cone($radius, $height)
 
         if (!utils.isset(glObject))
         {
-			var thetaResolution = 32;
+			var thetaResolution = Doc.resolution;
 			var heightResolution = 2;
 			var radiusResolution = 2;
 
@@ -70,7 +70,7 @@ function Cone($radius, $height)
             $this.setGlObject(glObject);
         }
 
-        return $this['super'].compute3D(glObject.getInstance());
+		return $this.computeTransforms(glObject);
     };
 
     this.clone = function()
@@ -86,15 +86,13 @@ function Cone($radius, $height)
 
 	// GET
 	
-	this.getRadius1 = function() { return radius1; };
-	this.getRadius2 = function() { return radius2; };
+	this.getRadius = function() { return radius; };
 	this.getHeight = function() { return height; };
 	this.getAngle = function() { return angle; };
 	this.getDeltaX = function() { return deltaX; };
 	this.getDeltaY = function() { return deltaY; };
 	this.isFilled = function() { return fill; };
 	this.isBottomClosed = function() { return bottomClosed; };
-	this.isTopClosed = function() { return topClosed; };
 
 	// SET
 	

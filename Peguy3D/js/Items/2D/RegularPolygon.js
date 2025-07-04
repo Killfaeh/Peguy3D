@@ -14,30 +14,29 @@ function RegularPolygon($radius, $nbSides)
 	if (!utils.isset(nbSides) || nbSides < 3)
 		nbSides = 3;
 
-	var curve = new Curve();
+	var curve = new Path([]);
 
 	//////////////
 	// Méthodes //
 	//////////////
 
-	this.computeSVG = function()
+	var updatePath = function()
     {
 		var stepTheta = 2.0*Math.PI/nbSides;
-        var pointsSTR = '';
 
-        pointsSTR = 'M ' + $radius + ',0.0';
+        curve.setOperations([]);
+		curve.moveTo([radius, 0.0]);
 
         for (var i = 1; i <= nbSides; i++)
-            pointsSTR = pointsSTR + ' L' + $radius*Math.cos(i*stepTheta) + ',' + $radius*Math.sin(i*stepTheta);
-    
-        pointsSTR = pointsSTR + ' Z';
+            curve.lineTo([radius*Math.cos(i*stepTheta), radius*Math.sin(i*stepTheta)]);
 
-        var objectCode = '<path d="' + pointsSTR + '" />';
+		curve.close();
+    };
 
-        var svgObject = new Component(objectCode);
-
-        $this['super'].computeSVG(svgObject);
-
+	this.computeSVG = function computeSVG()
+    {
+        updatePath();
+        var svgObject = $this.execSuper('computeSVG', [], computeSVG);
         return svgObject;
     };
 
@@ -47,7 +46,6 @@ function RegularPolygon($radius, $nbSides)
 
         if (!utils.isset(glObject))
         {
-			//var object = new GLDisc(radius, 360.0, parseInt(10*radius)+1, nbSides);
 			var object = new GLDisc(radius, 360.0, 2, nbSides);
 			object.setVertexShaderName('vertex-normals');
 			object.setFragmentShaderName('fragment-modeling');
@@ -55,12 +53,12 @@ function RegularPolygon($radius, $nbSides)
             $this.setGlObject(glObject);
         }
 
-        return $this['super'].compute3D(glObject.getInstance());
+		return $this.computeTransforms(glObject);
     };
 
     this.clone = function()
 	{
-		var clone = new Circle(radius);
+		var clone = new RegularPolygon(radius, nbSides);
 		clone.setTransformList(clone.getTransformList());
 		return clone;
 	};
@@ -72,6 +70,7 @@ function RegularPolygon($radius, $nbSides)
 	// GET
 	
 	this.getRadius = function() { return radius; };
+	this.getNbSides = function() { return nbSides; };
 
 	// SET
 	
@@ -81,15 +80,30 @@ function RegularPolygon($radius, $nbSides)
 
         if (!utils.isset(radius))
             radius = 1.0;
+
+		updatePath();
     };
 
     this.radius = function($radius) { $this.setRadius($radius); };
+
+	this.setNbSides = function($nbSides)
+    {
+        var nbSides = $nbSides;
+
+		if (!utils.isset(nbSides) || nbSides < 3)
+			nbSides = 3;
+
+		updatePath();
+    };
+
+	this.nbSides = function($nbSides) { $this.setNbSides($nbSides); };
 
 	//////////////
 	// Héritage //
 	//////////////
 	
 	var $this = utils.extend(curve, this);
+	updatePath();
 	return $this; 
 }
 

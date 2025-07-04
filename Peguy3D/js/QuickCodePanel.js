@@ -119,6 +119,12 @@ function QuickCodePanel()
 		},
 
 		{ 
+			label: 'Create ribbon from curve',
+			keywords: '2d, ribbon, curve, path',
+			code: "var ribbon = new RibbonFromCurve([[-0.25, -0.25], [0.25, -0.25], [0.0, 0.25]], 0.01, 'z', 0, 30.0);\n"
+		},
+
+		{ 
 			label: 'Create ring',
 			keywords: '2d, ring',
 			code: 'var ring = new Ring(radius1, radius2, angle);\n'
@@ -137,22 +143,22 @@ function QuickCodePanel()
 		},
 
 		{ 
-			label: 'Create path with operations list',
+			label: 'Create 2D path with operations list',
 			keywords: '2d, path',
-			code: "var path = new Path([['M', -0.25, -0.25], ['L', 0.25, -0.25], ['L', 0.0, 0.25], ['Z']];);\n"
+			code: "var path = new Path([['M', [-0.25, -0.25]], ['L', [0.25, -0.25]], ['L', [0.0, 0.25]], ['Z']]);\n"
 		},
 
 		{ 
-			label: 'Create path with functions',
+			label: 'Create 2D path with functions',
 			keywords: '2d, path',
 			code: 'var path = new Path([]);\n'
-					+ 'path.moveTo($x, $y);\n'
-					+ 'path.lineTo($x, $y);\n'
-					+ 'path.arc($rx, $ry, $rotation, $largeArcFlag, $sweepFlag, $endX, $endY);\n'
-					+ 'path.bezierQ($hx, $hy, $endX, $endY);\n'
-					+ 'path.bezierQT($hx, $hy, $endX, $endY, $htx, $hty);\n'
-					+ 'path.bezierC($h1x, $h1y, $h2x, $h2y, $endX, $endY);\n'
-					+ 'path.bezierCS($h1x, $h1y, $h2x, $h2y, $endX, $endY, $hs1x, $hs1y, $hs2x, $hs2y);\n'
+					+ 'path.moveTo([$x, $y]);\n'
+					+ 'path.lineTo([$x, $y]);\n'
+					+ 'path.arc([$rx, $ry], $rotation, $largeArcFlag, $sweepFlag, [$endX, $endY]);\n'
+					+ 'path.bezierQ([$hx, $hy], [$endX, $endY]);\n'
+					+ 'path.bezierQT([$hx, $hy], [$endX, $endY], [$htx, $hty]);\n'
+					+ 'path.bezierC([$h1x, $h1y], [$h2x, $h2y], [$endX, $endY]);\n'
+					+ 'path.bezierCS([$h1x, $h1y], [$h2x, $h2y], [$endX, $endY], [$hs1x, $hs1y], [$hs2x, $hs2y]);\n'
 					+ 'path.close();\n'
 		},
 
@@ -203,6 +209,12 @@ function QuickCodePanel()
 			label: 'Create ellipsoid',
 			keywords: '3d, ellipsoid',
 			code: 'var ellipsoid = new Ellipsoid(2.0, 1.0, 0.5);\n'
+		},
+
+		{ 
+			label: 'Create extrusion from curve',
+			keywords: '2d, extrusion, extrude, curve, path',
+			code: "var extrusion = new ExtrudeCurve([[-0.25, -0.25], [0.25, -0.25], [0.0, 0.25]], 2.0, 0.01, 'z', 0, 30.0);\n"
 		},
 
 		{ 

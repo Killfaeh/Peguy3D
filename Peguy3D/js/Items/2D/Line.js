@@ -42,7 +42,9 @@ function Line($x1, $y1, $z1, $x2, $y2, $z2)
             $this.setGlObject(glObject);
         }
 
-        return $this['super'].compute3D(glObject.getInstance());
+        //return $this['super'].compute3D(glObject.getInstance());
+        //return $this.execSuper('compute3D', [glObject.getInstance()], compute3D);
+        return $this.computeTransforms(glObject);
     };
 
     this.clone = function()
@@ -51,6 +53,46 @@ function Line($x1, $y1, $z1, $x2, $y2, $z2)
 		clone.setTransformList(clone.getTransformList());
 		return clone;
 	};
+
+    this.borderToPath = function($width)
+    {
+        return new Path([]);
+    };
+
+
+    this.samplePoints = function($n)
+    {
+        var svgObject = $this.computeSVG();
+
+        if (!utils.isset($n) || $n < 2)
+        {
+            var pointsList = [];
+            pointsList.push(svgObject.pointAtLength(0.0));
+            pointsList.push(svgObject.pointAtLength(1.0));
+            return pointsList;
+        }
+        else
+            return svgObject.samplePoints($n);
+    };
+
+    this.samplePointsWithProperties = function($n)
+    {
+        var svgObject = $this.computeSVG();
+
+        if (!utils.isset($n) || $n < 2)
+        {
+            var pointsList = [];
+            var vertex1 = svgObject.pointAtLength(0.0);
+            var vertex2 = svgObject.pointAtLength(1.0);
+            var tangent = (new Vector([vertex2[0]-vertex1[0], vertex2[1]-vertex1[1]])).normalize();
+            var normal = [tangent.values()[1], -tangent.values()[0]];
+            pointsList.push({point: vertex1, tangent: tangent, normal: normal, smooth: false});
+            pointsList.push({point: vertex2, tangent: tangent, normal: normal, smooth: false});
+            return pointsList;
+        }
+        else
+            return svgObject.samplePointsForWebGL($n);
+    };
 
 	////////////////
 	// Accesseurs //

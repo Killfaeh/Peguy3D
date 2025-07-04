@@ -11,6 +11,14 @@ function PrismRevolution($verticesList, $resolution, $smoothTheta)
 	var align = ''; // origine de l'environement, minX, maxX
 	var resolution = $resolution;
 	var smoothTheta = $smoothTheta;
+
+	if (!utils.isset(verticesList))
+		verticesList = [];
+
+	//*
+	if (!Array.isArray(verticesList) && utils.isset(verticesList.samplePoints))
+		verticesList = verticesList.samplePoints();
+	//*/
 	
 	/*
 	if (angle <= 0.0 || angle > 360.0)
@@ -29,7 +37,7 @@ function PrismRevolution($verticesList, $resolution, $smoothTheta)
 		resolution = 3;
 
 	if (!utils.isset(resolution))
-		resolution = 32;
+		resolution = Doc.resolution;
 
 	if (smoothTheta <= 0.0 || smoothTheta > 180.0)
 		smoothTheta = 180.0;
@@ -111,7 +119,7 @@ function PrismRevolution($verticesList, $resolution, $smoothTheta)
             $this.setGlObject(glObject);
         }
 
-        return $this['super'].compute3D(glObject.getInstance());
+		return $this.computeTransforms(glObject);
     };
 
     this.clone = function()

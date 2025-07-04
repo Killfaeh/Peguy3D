@@ -1,3 +1,8 @@
+.insert-asset-popup td
+{
+	padding: 20px;
+}
+
 .insert-asset-popup .insertSettingsPanel
 {
 	display: inline-block;

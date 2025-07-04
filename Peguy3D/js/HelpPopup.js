@@ -18,6 +18,7 @@ function HelpPopup()
 				+ "var ellipse = new Ellipse(rX, rY);\n\n"
 	
 				+ "// Create polygon\n"
+				+ "// Can use a 2D path instead of a list of vertices/points \n"
 				+ "var points = [[-0.25, -0.25], [0.25, -0.25], [0.0, 0.25]];\n"
 				+ "var axis = 'z';\n"
 				+ "var polygon = new Polygon(points, axis);\n\n"
@@ -32,6 +33,15 @@ function HelpPopup()
 				+ "var nbFaces = 3;\n"
 				+ 'var regularPolygon = new RegularPolygon(radius, nbFaces);\n\n'
 
+				+ "// Create a 2D ribbon from curve\n"
+				+ "// Can use a 2D path instead of a list of vertices/points \n"
+				+ "var points = [[-0.25, -0.25], [0.25, -0.25], [0.0, 0.25]];\n"
+				+ "var width = 0.01;\n"
+				+ "var axis = 'z';\n"
+				+ "var cornerMode = 0; // 0: sharp, 1: bevel, 2: round\n"
+				+ "var cornerAngle = 30.0;\n"
+				+ "var ribbon = new RibbonFromCurve(points, width, axis, cornerMode, cornerAngle);\n\n"
+
 				+ "// Create ring\n"
 				+ "var radius1 = 1.0;\n"
 				+ "var radius2 = 2.0;\n"
@@ -42,28 +52,29 @@ function HelpPopup()
 				+ "var size = 1.0;\n"
 				+ "var square = new Square(size);\n\n"
 
-				+ "// Create line (has curve type)\n"
+				+ "// Create 2D line \n"
 				+ "var x1 = 0;\n"
 				+ "var y1 = 0;\n"
 				+ "var x2 = 1.0;\n"
 				+ "var y2 = 1.0;\n"
 				+ "var line = new Line(x1, y1, x2, y2);\n\n"
 				
-				+ "// Create path (has curve type)\n"
-				+ "var operations = [['M', -0.25, -0.25], ['L', 0.25, -0.25], ['L', 0.0, 0.25], ['Z']];\n"
+				+ "// Create 2D path \n"
+				+ "var operations = [['M', [-0.25, -0.25]], ['L', [0.25, -0.25]], ['L', [0.0, 0.25]], ['Z']];\n"
 				+ "var path1 = new Path($operations);\n\n"
 				
 				+ "var path2 = new Path([]);\n"
-				+ "path2.moveTo($x, $y);\n"
-				+ "path2.lineTo($x, $y);\n"
-				+ "path2.arc($rx, $ry, $rotation, $largeArcFlag, $sweepFlag, $endX, $endY);\n"
-				+ "path2.bezierQ($hx, $hy, $endX, $endY);\n"
-				+ "path2.bezierQT($hx, $hy, $endX, $endY, $htx, $hty);\n"
-				+ "path2.bezierC($h1x, $h1y, $h2x, $h2y, $endX, $endY);\n"
-				+ "path2.bezierCS($h1x, $h1y, $h2x, $h2y, $endX, $endY, $hs1x, $hs1y, $hs2x, $hs2y);\n"
+				+ "path2.moveTo([$x, $y]);\n"
+				+ "path2.lineTo([$x, $y]);\n"
+				+ "path2.arc([$rx, $ry], $rotation, $largeArcFlag, $sweepFlag, [$endX, $endY]);\n"
+				+ "path2.bezierQ([$hx, $hy], [$endX, $endY]);\n"
+				+ "path2.bezierQT([$hx, $hy], [$endX, $endY], [$htx, $hty]);\n"
+				+ "path2.bezierC([$h1x, $h1y], [$h2x, $h2y], [$endX, $endY]);\n"
+				+ "path2.bezierCS([$h1x, $h1y], [$h2x, $h2y], [$endX, $endY], [$hs1x, $hs1y], [$hs2x, $hs2y]);\n"
 				+ "path2.close();\n\n"
 				
-				+ "// Create polyline (has curve type)\n"
+				+ "// Create polyline \n"
+				+ "// Can use a 2D path instead of a list of vertices/points \n"
 				+ "var points = [[-0.25, -0.25], [0.25, -0.25], [0.0, 0.25]];\n"
 				+ "var polyline = new Polyline(points);\n\n";
 
@@ -120,7 +131,18 @@ function HelpPopup()
 				+ "var radiusZ = 0.25;\n"
 				+ "var ellipsoid = new Ellipsoid(radiusX, radiusY, radiusZ);\n\n"
 
+				+ "// Create an extrusion from curve\n"
+				+ "// Can use a 2D path instead of a list of vertices/points \n"
+				+ "var points = [[-0.25, -0.25], [0.25, -0.25], [0.0, 0.25]];\n"
+				+ "var height = 2.0;\n"
+				+ "var width = 0.01;\n"
+				+ "var axis = 'z';\n"
+				+ "var cornerMode = 0; // 0: sharp, 1: bevel, 2: round\n"
+				+ "var cornerAngle = 30.0;\n"
+				+ "var extrusion = new ExtrudeCurve(verticesList, height, width, axis, cornerMode, cornerAngle);\n\n"
+
 				+ "// Create extrustion\n"
+				+ "// Can use a 2D path instead of a list of vertices/points \n"
 				+ "var verticesList = [[-0.25, -0.25], [0.25, -0.25], [0.0, 0.25]];\n"
 				+ "var height = 1.0;\n"
 				+ "var axis = 'z';\n"
@@ -166,6 +188,7 @@ function HelpPopup()
 				+ "prism.setTopClosed(topClosed);\n\n"
 
 				+ "// Create prism from polygon\n"
+				+ "// Can use a 2D path instead of a list of vertices/points \n"
 				+ "var verticesList = [[-0.25, -0.25], [0.25, -0.25], [0.0, 0.25]];\n"
 				+ "var height = 2.0;\n"
 				+ "var axis = 'z';\n"
@@ -176,7 +199,8 @@ function HelpPopup()
 				+ "prism.setTopClosed(topClosed);\n\n"
 
 				+ "// Create prism revolution\n"
-				+ "var verticesList = [[-0.25, -0.25], [0.25, -0.25], [0.0, 0.25]];\n"
+				+ "// Can use a 2D path instead of a list of vertices/points \n"
+				+ "var verticesList = [[0.0, -0.25], [0.25, -0.25], [0.0, 0.25]];\n"
 				+ "var resolution = 5;\n"
 				+ "var smoothTheta = 45.5;\n"
 				+ "var angle = 45.0;\n"
@@ -200,6 +224,7 @@ function HelpPopup()
 				+ "pyramid.setBottomClosed(bottomClosed);\n\n"
 
 				+ "// Create pyramid from polygon\n"
+				+ "// Can use a 2D path instead of a list of vertices/points \n"
 				+ "var verticesList = [[-0.25, -0.25], [0.25, -0.25], [0.0, 0.25]];\n"
 				+ "var height = 2.0;\n"
 				+ "var deltaX = 0.1;\n"
@@ -211,7 +236,8 @@ function HelpPopup()
 				+ "pyramid.setBottomClosed(bottomClosed);\n\n"
 
 				+ "// Create revolution\n"
-				+ "var verticesList = [[-0.25, -0.25], [0.25, -0.25], [0.0, 0.25]];\n"
+				+ "// Can use a 2D path instead of a list of vertices/points \n"
+				+ "var verticesList = [[0.0, -0.25], [0.25, -0.25], [0.0, 0.25]];\n"
 				+ "var resolution = 5;\n"
 				+ "var smoothTheta = 45.5;\n"
 				+ "var angle = 45.0;\n"

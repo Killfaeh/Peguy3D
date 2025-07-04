@@ -76,7 +76,7 @@ function Pipe($radius1, $radius2, $radius3, $radius4, $height)
 
         if (!utils.isset(glObject))
         {
-			var thetaResolution = 32;
+			var thetaResolution = Doc.resolution;
 			var heightResolution = 2;
 			var radiusResolution = 2;
 			
@@ -87,7 +87,7 @@ function Pipe($radius1, $radius2, $radius3, $radius4, $height)
             $this.setGlObject(glObject);
         }
 
-        return $this['super'].compute3D(glObject.getInstance());
+		return $this.computeTransforms(glObject);
     };
 
     this.clone = function()
