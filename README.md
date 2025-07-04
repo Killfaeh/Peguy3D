@@ -5,7 +5,7 @@ Here is some examples of what you can do with Péguy 3D.</br>
 
 <div align="center">
 <img src="./demos/quickStartDemoScreenshot.png"></br>
-<img src="./demos/screenshot.png">
+<img src="./demos/screenshot-01.png">
 </div></br>
 
 Péguy 3D can assist you to create ambitious scenes in your favorite 3D program like Blender.</br>
