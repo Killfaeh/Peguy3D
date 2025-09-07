@@ -359,7 +359,7 @@ function ViewManager()
 
 	this.updatePlugIns = function($plugIns)
 	{
-		plugins = $plugIns;
+		plugins = $plugIns.plugIns;
 
 		for (var i = 0; i < $plugIns.plugIns.length; i++)
 			Loader.addScript($plugIns.plugIns[i], $plugIns.plugIns[i]);

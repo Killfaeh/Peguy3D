@@ -87,20 +87,22 @@ function loadPlugIns()
 				if (subFile !== 'main.js')
 				{
 					var tmpFilePath = tmpPluginsPath + '/plugin-' + timestamp + '-' + index + '.js';
+					tmpFilePath = tmpFilePath.replaceAll('\\', '/');
 					var filepath = __dirname + '/PlugIns/' + file + '/' + subFile;
 					var fileContent = fs.readFileSync(filepath, "utf8");
 					fs.writeFileSync(tmpFilePath, fileContent + '\n\nif (Loader !== null && Loader !== undefined)\n\tLoader.hasLoaded("' + tmpFilePath + '");');
-					plugIns.push(tmpFilePath.replace('C:/', ''));
+					plugIns.push(tmpFilePath);
 				}
 			}
 		}
 		else if (/\.js$/.test(file))
 		{
 			var tmpFilePath = tmpPluginsPath + '/plugin-' + timestamp + '-' + index + '.js';
+			tmpFilePath = tmpFilePath.replaceAll('\\', '/');
 			var filepath = __dirname + '/' + path.join('PlugIns', file);
 			var fileContent = fs.readFileSync(filepath, "utf8");
 			fs.writeFileSync(tmpFilePath, fileContent + '\n\nif (Loader !== null && Loader !== undefined)\n\tLoader.hasLoaded("' + tmpFilePath + '");');
-			plugIns.push(tmpFilePath.replace('C:/', ''));
+			plugIns.push(tmpFilePath);
 		}
 
 		index++;
@@ -122,21 +124,23 @@ function loadPlugIns()
 					&& subFile !== 'main.js' && subFile !== 'project.json' && subFile !== 'run')
 				{
 					var tmpFilePath = tmpPluginsPath + '/plugin-' + timestamp + '-' + index + '.js';
+					tmpFilePath = tmpFilePath.replaceAll('\\', '/');
 					var filepath = userHomeDir + '/Documents/Peguy/3D/PlugIns/' + file + '/' + subFile;
 					//console.log(subFile);
 					var fileContent = fs.readFileSync(filepath, "utf8");
 					fs.writeFileSync(tmpFilePath, fileContent + '\n\nif (Loader !== null && Loader !== undefined)\n\tLoader.hasLoaded("' + tmpFilePath + '");');
-					plugIns.push(tmpFilePath.replace('C:/', ''));
+					plugIns.push(tmpFilePath);
 				}
 			}
 		}
 		else if (/\.js$/.test(file))
 		{
 			var tmpFilePath = tmpPluginsPath + '/plugin-' + timestamp + '-' + index + '.js';
+			tmpFilePath = tmpFilePath.replaceAll('\\', '/');
 			var filepath = path.join(userHomeDir + '/Documents/Peguy/3D/PlugIns', file);
 			var fileContent = fs.readFileSync(filepath, "utf8");
 			fs.writeFileSync(tmpFilePath, fileContent + '\n\nif (Loader !== null && Loader !== undefined)\n\tLoader.hasLoaded("' + tmpFilePath + '");');
-			plugIns.push(tmpFilePath.replace('C:/', ''));
+			plugIns.push(tmpFilePath);
 		}
 
 		index++;
@@ -288,8 +292,9 @@ async function handleExecProgram($event, $filePath, $content)
 	{
 		var tmpFileName = key + '-' + timestamp + '-' + index + '.js';
 		var tmpFilePath = $filePath + '/run/' + tmpFileName;
+		tmpFilePath = tmpFilePath.replaceAll('\\', '/');
 		var codeToSave = $content[key] + '\n\nif (Loader !== null && Loader !== undefined)\n\tLoader.hasLoaded("' + tmpFilePath + '");';
-		projectConfig.scripts.push({ name: key, tmpFile: tmpFilePath.replace('C:/', '') });
+		projectConfig.scripts.push({ name: key, tmpFile: tmpFilePath });
 		fs.writeFileSync(tmpFilePath, codeToSave);
 		index++;
 	}
