@@ -67,7 +67,7 @@ function loadPlugIns()
 	if (fs.existsSync(tmpPluginsPath))
 		fs.rmSync(tmpPluginsPath, { recursive: true, force: true });
 		
-	fs.mkdirSync(tmpPluginsPath);
+	fs.mkdirSync(tmpPluginsPath, { recursive: true });
 
 	var index = 1;
 	var timestamp = (new Date()).getTime();
@@ -90,7 +90,7 @@ function loadPlugIns()
 					var filepath = __dirname + '/PlugIns/' + file + '/' + subFile;
 					var fileContent = fs.readFileSync(filepath, "utf8");
 					fs.writeFileSync(tmpFilePath, fileContent + '\n\nif (Loader !== null && Loader !== undefined)\n\tLoader.hasLoaded("' + tmpFilePath + '");');
-					plugIns.push(tmpFilePath);
+					plugIns.push(tmpFilePath.replace('C:/', ''));
 				}
 			}
 		}
@@ -100,7 +100,7 @@ function loadPlugIns()
 			var filepath = __dirname + '/' + path.join('PlugIns', file);
 			var fileContent = fs.readFileSync(filepath, "utf8");
 			fs.writeFileSync(tmpFilePath, fileContent + '\n\nif (Loader !== null && Loader !== undefined)\n\tLoader.hasLoaded("' + tmpFilePath + '");');
-			plugIns.push(tmpFilePath);
+			plugIns.push(tmpFilePath.replace('C:/', ''));
 		}
 
 		index++;
@@ -126,7 +126,7 @@ function loadPlugIns()
 					//console.log(subFile);
 					var fileContent = fs.readFileSync(filepath, "utf8");
 					fs.writeFileSync(tmpFilePath, fileContent + '\n\nif (Loader !== null && Loader !== undefined)\n\tLoader.hasLoaded("' + tmpFilePath + '");');
-					plugIns.push(tmpFilePath);
+					plugIns.push(tmpFilePath.replace('C:/', ''));
 				}
 			}
 		}
@@ -136,7 +136,7 @@ function loadPlugIns()
 			var filepath = path.join(userHomeDir + '/Documents/Peguy/3D/PlugIns', file);
 			var fileContent = fs.readFileSync(filepath, "utf8");
 			fs.writeFileSync(tmpFilePath, fileContent + '\n\nif (Loader !== null && Loader !== undefined)\n\tLoader.hasLoaded("' + tmpFilePath + '");');
-			plugIns.push(tmpFilePath);
+			plugIns.push(tmpFilePath.replace('C:/', ''));
 		}
 
 		index++;
@@ -289,7 +289,7 @@ async function handleExecProgram($event, $filePath, $content)
 		var tmpFileName = key + '-' + timestamp + '-' + index + '.js';
 		var tmpFilePath = $filePath + '/run/' + tmpFileName;
 		var codeToSave = $content[key] + '\n\nif (Loader !== null && Loader !== undefined)\n\tLoader.hasLoaded("' + tmpFilePath + '");';
-		projectConfig.scripts.push({ name: key, tmpFile: tmpFilePath });
+		projectConfig.scripts.push({ name: key, tmpFile: tmpFilePath.replace('C:/', '') });
 		fs.writeFileSync(tmpFilePath, codeToSave);
 		index++;
 	}
