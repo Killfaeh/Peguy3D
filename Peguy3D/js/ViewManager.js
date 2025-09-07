@@ -4,6 +4,8 @@ function ViewManager()
 	// Attributs //
 	///////////////
 	
+	var plugins = [];
+
 	var component = new Component('<div></div>');
 
 	//// Menu Bar ////
@@ -357,6 +359,8 @@ function ViewManager()
 
 	this.updatePlugIns = function($plugIns)
 	{
+		plugins = $plugIns;
+
 		for (var i = 0; i < $plugIns.plugIns.length; i++)
 			Loader.addScript($plugIns.plugIns[i], $plugIns.plugIns[i]);
 
@@ -632,6 +636,8 @@ function ViewManager()
 	/*
 	this.getPositionConsole = function() { return positionConsole; };
 	//*/
+
+	this.getPlugins = function() { return plugins; };
 
 	this.getVectorialAssetsLibrary = function() { return vectorialAssetsLibrary; };
 	
