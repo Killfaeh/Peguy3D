@@ -5,12 +5,12 @@ Complete documentation is available in the [Wiki](https://github.com/Killfaeh/Pe
 Here is some examples of what you can do with Péguy 3D.<br/>
 
 <div align="center">
-<img src="./demos/quickStartDemoScreenshot.png"><br/>
-<img src="./demos/screenshot-01.png">
+<img src="https://github.com/Killfaeh/Peguy3D/raw/main/Wiki/Start/BasicUse/interface-01.png?raw=true"><br/>
+<img src="https://github.com/Killfaeh/Peguy3D/raw/main/Wiki/Gallery/capture-temple-1.png?raw=true">
 </div></br>
 
 Péguy 3D can assist you to create ambitious scenes in your favorite 3D program like Blender.<br/>
 
 <div align="center">
-<img src="./demos/buildingsIllustration.jpg">
+<img src="https://github.com/Killfaeh/Peguy3D/raw/main/Wiki/Gallery/sci-fi-city.jpg?raw=true">
 </div>
