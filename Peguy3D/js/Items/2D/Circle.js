@@ -23,10 +23,30 @@ function Circle($radius)
 	var updatePath = function()
     {
 		curve.setOperations([]);
-		curve.moveTo([-radius, 0.0]);
-		curve.arc([radius, radius], 0, 0, 0, [radius, 0]);
-		curve.arc([radius, radius], 0, 0, 0, [-radius, 0]);
-		//curve.close();
+
+		if (angle < 360.0)
+		{
+			var radAngle = angle/180.0*Math.PI;
+			var endX = radius*Math.cos(radAngle);
+			var endY = radius*Math.sin(radAngle);
+			var flag2 = 0;
+			var flag3 = 0;
+
+			if (angle > 180.0)
+				flag2 = 1;
+
+			curve.moveTo([radius, 0.0]);
+			curve.arc([radius, radius], 0, flag2, flag3, [endX, endY]);
+			curve.lineTo([0.0, 0.0]);
+			curve.close();
+		}
+		else
+		{
+			curve.moveTo([radius, 0.0]);
+			curve.arc([radius, radius], 0, 0, 0, [-radius, 0.0]);
+			curve.arc([radius, radius], 0, 0, 1, [radius, 0.0]);
+			//curve.close();
+		}
     };
 
 	this.computeSVG = function computeSVG()
@@ -67,6 +87,7 @@ function Circle($radius)
 	// GET
 	
 	this.getRadius = function() { return radius; };
+	this.getAngle = function() { return angle; };
 
 	// SET
 	
@@ -80,7 +101,31 @@ function Circle($radius)
 		updatePath();
     };
 
-    this.radius = function($radius) { $this.setRadius($radius); };
+    this.radius = function($radius)
+	{
+		if (utils.isset($radius))
+			$this.setRadius($radius);
+
+		return radius;
+	};
+
+	this.setAngle = function($angle)
+    {
+        angle = $angle;
+
+        if (!utils.isset(angle))
+            angle = 360.0;
+
+		updatePath();
+    };
+
+    this.angle = function($angle)
+	{
+		if (utils.isset($angle))
+			$this.setAngle($angle);
+
+		return angle;
+	};
 
 	//////////////
 	// Héritage //

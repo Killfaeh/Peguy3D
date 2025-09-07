@@ -14,10 +14,31 @@ function RibbonFromCurve($points, $width, $axis, $cornerMode, $cornerAngle)
 		points = points.samplePoints();
     //*/
 
-    var width = Math.abs($width);
+    var width = $width;
 
-	if (!utils.isset(width))
+    if (!utils.isset(width))
 		width = 0.1;
+
+	if (!Array.isArray(width) && !utils.isset(width.samplePoints))
+		width = Math.abs(width);
+	else if (Array.isArray(width))
+	{
+		if (width.length < points.length)
+        {
+            var lastWidth = width[width.length-1];
+
+            for (var i = width.length; i < points.length; i++)
+                width.push(lastWidth);
+        }
+	}
+    else if (utils.isset(width.samplePoints))
+    {
+        var samples = width.samplePoints(points.length);
+        width = [];
+
+        for (var i = 0; i < samples.length; i++)
+            width.push(samples[i][1]);
+    }
 
 	var axis = $axis;
 
@@ -109,10 +130,38 @@ function RibbonFromCurve($points, $width, $axis, $cornerMode, $cornerAngle)
     this.setPoints = function($points)
     {
         points = $points;
+
+        if (!utils.isset(points))
+            points = [];
+
         updatePath();
     };
 
-    this.points = function($points) { $this.setPoints($points); };
+    this.points = function($points)
+    {
+        if (utils.isset($points))
+            $this.setPoints($points);
+
+        return points;
+    };
+
+    this.setAxis = function($axis)
+    {
+        axis = $axis;
+
+        if (!utils.isset(axis))
+            axis = 'z';
+
+        updatePath();
+    };
+
+    this.axis = function($axis)
+    {
+        if (utils.isset($axis))
+            $this.setAxis($axis);
+
+        return axis;
+    };
 
 	//////////////
 	// Héritage //

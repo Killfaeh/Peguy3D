@@ -49,11 +49,16 @@ function PreviewPanel()
 		canvas.addInstance(workingGrid);
 		canvas.addInstance(workingMark);
 
-		NB_GL_BUFFERS = 0;
+		//NB_GL_BUFFERS = 0;
+		GL_BUFFERS = [];
+		NB_GL_INSTANCES = 0;
 		scene = Doc.compute3D();
-		console.log("NB_GL_BUFFERS = " + NB_GL_BUFFERS);
+		//console.log("NB_GL_BUFFERS = " + NB_GL_BUFFERS);
 
 		canvas.addInstance(scene);
+		console.log("Je lance le rendu");
+
+		canvas.update();
 		canvas.render();
 	};
 

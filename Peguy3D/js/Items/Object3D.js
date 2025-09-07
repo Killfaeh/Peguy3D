@@ -43,6 +43,8 @@ function Object3D()
 
     this.computeTransforms = function($glObject)
     {
+        glObject = $glObject;
+
         if (utils.isset($glObject) && $glObject.getType() === 'instance' && utils.isset($glObject.getObject().setMaterial))
             $glObject.getObject().setMaterial(material.getGLMaterial());
         else if (utils.isset($glObject.setMaterial))
@@ -75,28 +77,52 @@ function Object3D()
 
     this.compute3D = function($glObject)
     {
-        console.log("Object3D");
+        //console.log("Object3D");
 
         return $this.computeTransforms($glObject);
     };
 
-    this.instancesToPoints = function($points)
+    this.instancesToPoints = function($points, $alignToNormal)
     {
+        var points = $points;
+
+        if (!utils.isset(points))
+    		points = [];
+
+        if (!Array.isArray(points))
+		{
+			if (utils.isset(points.samplePointsWithProperties))
+				points = points.samplePointsWithProperties();
+			else if (utils.isset(points.samplePoints))
+				points = points.samplePoints();
+            else if (utils.isset(points.data))
+				points = points.data();
+		}
+
         var instancesList = [];
 
-        for (var i = 0; i < $points.length; i++)
+        for (var i = 0; i < points.length; i++)
         {
             var instance = new Instance($this);
 
-            console.log("POINT : ");
-            console.log($points[i]);
+            //console.log("POINT : ");
+            //console.log($points[i]);
 
-            if (utils.isset($points[i].point))
+            if (utils.isset(points[i].point))
             {
-                instance.add(new Translation($points[i].point[0], $points[i].point[1], $points[i].point[2]));
+                instance.add(new Translation(points[i].point[0], points[i].point[1], points[i].point[2]));
+
+                if ($alignToNormal === true)
+                {
+                    var zAxis = points[i].tangent;
+                    var xAxis = points[i].normal;
+                    var yAxis = Vectors.crossProduct((new Vector(zAxis)).normalize(), (new Vector(xAxis)).normalize()).normalize().values();
+
+                    instance.add(new Align([xAxis, yAxis, zAxis]));
+                }
             }
             else
-                instance.add(new Translation($points[i][0], $points[i][1], $points[i][2]));
+                instance.add(new Translation(points[i][0], points[i][1], points[i][2]));
 
             instancesList.push(instance);
         }
@@ -112,6 +138,8 @@ function Object3D()
 	
     this.getType = function() { return type; };
 
+    //this.getBoundingBox = function() { return boundingBox; };
+
     this.getTransformList = function() { return transformList; };
     this.getMaterial = function() { return material; };
 
@@ -120,8 +148,19 @@ function Object3D()
 
 	// SET
 	
+    //this.setBoundingBox = function($boundingBox) { boundingBox = $boundingBox; };
     this.setTransformList = function($transformList) { transformList = $transformList; };
+
     this.setMaterial = function($material) { material = $material; };
+
+    this.material = function($material)
+    {
+        if (utils.isset($material))
+            $this.setMaterial($material);
+
+        return material;
+    };
+
     this.setGlObject = function($glObject) { glObject = $glObject; };
 	
 	//////////////

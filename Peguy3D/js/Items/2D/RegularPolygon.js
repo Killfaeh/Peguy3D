@@ -22,13 +22,21 @@ function RegularPolygon($radius, $nbSides)
 
 	var updatePath = function()
     {
+		curve.setOperations([]);
+
 		var stepTheta = 2.0*Math.PI/nbSides;
 
-        curve.setOperations([]);
-		curve.moveTo([radius, 0.0]);
+        for (var i = 0; i < nbSides; i++)
+		{
+			var tmpAngle = (i+0.5)*stepTheta;
+			var x = radius*Math.cos(tmpAngle);
+			var y = radius*Math.sin(tmpAngle);
 
-        for (var i = 1; i <= nbSides; i++)
-            curve.lineTo([radius*Math.cos(i*stepTheta), radius*Math.sin(i*stepTheta)]);
+			if (i > 0)
+            	curve.lineTo([x, y, 0.0]);
+			else
+            	curve.moveTo([x, y, 0.0]);
+		}
 
 		curve.close();
     };
@@ -47,6 +55,7 @@ function RegularPolygon($radius, $nbSides)
         if (!utils.isset(glObject))
         {
 			var object = new GLDisc(radius, 360.0, 2, nbSides);
+			object.setDeltaAngle(true);
 			object.setVertexShaderName('vertex-normals');
 			object.setFragmentShaderName('fragment-modeling');
 			glObject = object;
@@ -84,7 +93,13 @@ function RegularPolygon($radius, $nbSides)
 		updatePath();
     };
 
-    this.radius = function($radius) { $this.setRadius($radius); };
+    this.radius = function($radius)
+	{
+		if (utils.isset($radius))
+			$this.setRadius($radius);
+
+		return radius;
+	};
 
 	this.setNbSides = function($nbSides)
     {

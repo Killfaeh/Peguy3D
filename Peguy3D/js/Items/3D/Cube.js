@@ -54,6 +54,38 @@ function Cube($size)
 	////////////////
 
 	// GET
+
+	/*
+	this.getBoundingBox = function()
+	{
+		var boundingBox = object3D.getBoundingBox();
+
+		if (!utils.isset(boundingBox))
+		{
+			boundingBox =
+			{
+				minX: -size/2.0, minY: -size/2.0, minZ: -size/2.0,
+				maxX: size/2.0, maxY: size/2.0, maxZ: size/2.0,
+				widthX: size, widthY: size, widthZ: size
+			};
+
+			var transformList = object3D.getTransformList();
+
+			if (transformList.length > 0)
+			{
+				for (var i = 0; i < transformList.length; i++)
+				{
+					// Ajouter les calculs de transformations
+					// ...
+				}
+			}
+
+			object3D.setBoundingBox(boundingBox);
+		}
+
+		return boundingBox;
+	};
+	//*/
 	
 	this.getSize = function() { return size; };
 
@@ -67,7 +99,13 @@ function Cube($size)
 			size = 1.0;
     };
 
-    this.size = function($size) { $this.setSize($size); };
+	this.size = function($size)
+	{
+		if (utils.isset($size))
+			$this.setSize($size);
+
+		return size;
+	};
 
 	//////////////
 	// Héritage //

@@ -7,7 +7,6 @@ function ExtrudeCurve($verticesList, $height, $width, $axis, $cornerMode, $corne
     var radius1 = null;
     var radius2 = null;
     var height = $height;
-    var width = $width;
     var deltaX = 0.0;
     var deltaY = 0.0;
 	var verticesList = $verticesList;
@@ -20,11 +19,6 @@ function ExtrudeCurve($verticesList, $height, $width, $axis, $cornerMode, $corne
 	if (!utils.isset(height))
 		height = 2.0;
 
-	var width = Math.abs($width);
-
-	if (!utils.isset(width))
-		width = 0.1;
-
 	if (!utils.isset(verticesList))
 		verticesList = [];
 
@@ -32,6 +26,32 @@ function ExtrudeCurve($verticesList, $height, $width, $axis, $cornerMode, $corne
 	if (!Array.isArray(verticesList) && utils.isset(verticesList.samplePoints))
 		verticesList = verticesList.samplePoints();
 	//*/
+
+	var width = $width;
+
+	if (!utils.isset(width))
+		width = 0.1;
+
+	if (!Array.isArray(width) && !utils.isset(width.samplePoints))
+		width = Math.abs(width);
+	else if (Array.isArray(width))
+	{
+		if (width.length < verticesList.length)
+        {
+            var lastWidth = width[width.length-1];
+
+            for (var i = width.length; i < verticesList.length; i++)
+                width.push(lastWidth);
+        }
+	}
+    else if (utils.isset(width.samplePoints))
+    {
+        var samples = width.samplePoints(verticesList.length);
+        width = [];
+
+        for (var i = 0; i < samples.length; i++)
+            width.push(samples[i][1]);
+    }
 
 	if (axis !== 'x' && axis !== 'y' && axis !== 'z')
 		axis = 'z';

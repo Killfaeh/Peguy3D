@@ -91,16 +91,29 @@ function Rect($width, $height)
         updatePath();
     };
 
-    this.size = function($width, $height) { $this.setSize($width, $height); };
+    this.size = function($width, $height)
+	{
+		if (utils.isset($width) && utils.isset($height))
+			$this.setSize($width, $height);
 
-    this.setRound = function($roundX, $roundY)
+		return [width, height];
+	};
+
+    /*
+    this.setRound = function($round)
     {
-        roundX = $roundX;
-        roundY = $roundY;
+        round = $round;
         updatePath();
     };
 
-    this.round = function($roundX, $roundY) { $this.setRound($roundX, $roundY); };
+    this.round = function($round)
+	{
+		if (utils.isset($round))
+			$this.setRound($round);
+
+		return round;
+	};
+    //*/
 
 	//////////////
 	// Héritage //

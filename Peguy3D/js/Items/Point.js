@@ -7,6 +7,7 @@ var Points =
         return dist;
     },
 
+    /*
     createGrid: function($width, $height, $nX, $nY, $random)
     {
         var pointsList = [];
@@ -23,7 +24,7 @@ var Points =
 
             for (var i = 0; i < $nX; i++)
             {
-                for (var j = 0; j < $nY; i++)
+                for (var j = 0; j < $nY; j++)
                 {
                     var x = i*stepX + Math.random()*2.0*random - random;
                     var y = j*stepY + Math.random()*2.0*random - random;
@@ -32,9 +33,14 @@ var Points =
             }
         }
 
+        //console.log("Grid points");
+        //console.log(pointsList);
+
         return pointsList;
     },
+    //*/
 
+    /*
     createStaggeredGrid: function($width, $height, $nX, $nY, $random)
     {
         var pointsList = [];
@@ -51,7 +57,7 @@ var Points =
 
             for (var i = 0; i < $nX; i++)
             {
-                for (var j = 0; j < $nY; i++)
+                for (var j = 0; j < $nY; j++)
                 {
                     var x = i*stepX + Math.random()*2.0*random - random;
                     var y = j*stepY + Math.random()*2.0*random - random;
@@ -66,7 +72,9 @@ var Points =
 
         return pointsList;
     },
+    //*/
 
+    /*
     createFibonacciPattern: function($width, $height, $nbDots, $random)
     {
         var pointsList = [];
@@ -80,7 +88,7 @@ var Points =
             random = 0.0;
 
         var patternRadius2 = ($width*$width + $height*$height)/4.0;
-        var patternRadius = Math.sqrt(patterRadius2);
+        var patternRadius = Math.sqrt(patternRadius2);
         var nbDots = Math.round(patternRadius2/500000.0*baseNbDots);
 
         for (var i = 0; i < $nbDots; i++)
@@ -93,6 +101,7 @@ var Points =
 
         return pointsList;
     },
+    //*/
 
     cut: function($input, $shape)
     {

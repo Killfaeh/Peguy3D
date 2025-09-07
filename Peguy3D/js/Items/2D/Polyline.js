@@ -27,9 +27,9 @@ function Polyline($points)
         for (var i = 0; i < points.length; i++)
         {
             if (i === 0)
-                curve.moveTo([points[i][0], points[i][1]]);
+                curve.moveTo([points[i][0], points[i][1], points[i][2]]);
             else 
-                curve.lineTo([points[i][0], points[i][1]]);
+                curve.lineTo([points[i][0], points[i][1], points[i][2]]);
         }
     };
 

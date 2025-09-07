@@ -79,7 +79,13 @@ function Ellipsoid($radiusX, $radiusY, $radiusZ)
             radiusX = 1.0;
     };
 
-    this.radiusX = function($radiusX) { $this.setRadiusX($radiusX); };
+    this.radiusX = function($radiusX)
+	{
+		if (utils.isset($radiusX))
+			$this.setRadiusX($radiusX);
+
+		return radiusX;
+	};
 
 	this.setRadiusY = function($radiusY)
     {
@@ -89,7 +95,13 @@ function Ellipsoid($radiusX, $radiusY, $radiusZ)
             radiusY = 1.0;
     };
 
-    this.radiusY = function($radiusY) { $this.setRadiusY($radiusY); };
+    this.radiusY = function($radiusY)
+	{
+		if (utils.isset($radiusY))
+			$this.setRadius($radiusY);
+
+		return radiusY;
+	};
 
 	this.setRadiusZ = function($radiusZ)
     {
@@ -99,7 +111,13 @@ function Ellipsoid($radiusX, $radiusY, $radiusZ)
             radiusZ = 1.0;
     };
 
-    this.radiusZ = function($radiusZ) { $this.setRadiusZ($radiusZ); };
+    this.radiusZ = function($radiusZ)
+	{
+		if (utils.isset($radiusZ))
+			$this.setRadiusZ($radiusZ);
+
+		return radiusZ;
+	};
 
 	//////////////
 	// Héritage //

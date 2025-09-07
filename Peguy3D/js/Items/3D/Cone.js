@@ -1,4 +1,3 @@
-//function Cone($radius, $height, $angle, $deltaX, $deltaY, $fill, $bottomClosed)
 function Cone($radius, $height)
 {
 	///////////////
@@ -18,23 +17,6 @@ function Cone($radius, $height)
 
 	if (!utils.isset(height))
 		height = 2.0;
-
-	/*
-	if (!utils.isset(angle))
-		angle = 360.0;
-
-	if (!utils.isset(deltaX))
-		deltaX = 0.0;
-
-	if (!utils.isset(deltaY))
-		deltaY = 0.0;
-
-	if (!utils.isset(fill))
-		fill = true;
-
-	if (!utils.isset(bottomClosed))
-		bottomClosed = true;
-	//*/
 
 	var object3D = new Object3D();
 
@@ -104,6 +86,14 @@ function Cone($radius, $height)
 			radius = 1.0;
     };
 
+	this.radius = function($radius)
+	{
+		if (utils.isset($radius))
+			$this.setRadius($radius);
+
+		return radius;
+	};
+
 	this.setHeight = function($height)
     {
         height = $height;
@@ -111,6 +101,14 @@ function Cone($radius, $height)
 		if (!utils.isset(height))
 			height = 2.0;
     };
+
+	this.height = function($height)
+	{
+		if (utils.isset($height))
+			$this.setHeight($height);
+
+		return height;
+	};
 
 	this.setAngle = function($angle)
     {
@@ -120,6 +118,14 @@ function Cone($radius, $height)
 			angle = 360.0;
     };
 
+	this.angle = function($angle)
+	{
+		if (utils.isset($angle))
+			$this.setAngle($angle);
+
+		return angle;
+	};
+
 	this.setDeltaX = function($deltaX)
     {
         deltaX = $deltaX;
@@ -127,6 +133,14 @@ function Cone($radius, $height)
 		if (!utils.isset(deltaX))
 			deltaX = 0.0;
     };
+
+	this.deltaX = function($deltaX)
+	{
+		if (utils.isset($deltaX))
+			$this.setDeltaX($deltaX);
+
+		return deltaX;
+	};
 
 	this.setDeltaY = function($deltaY)
     {
@@ -136,6 +150,14 @@ function Cone($radius, $height)
 			deltaY = 0.0;
     };
 
+	this.deltaY = function($deltaY)
+	{
+		if (utils.isset($deltaY))
+			$this.setDeltaY($deltaY);
+
+		return deltaY;
+	};
+
 	this.setFill = function($fill)
     {
         fill = $fill;
@@ -144,6 +166,14 @@ function Cone($radius, $height)
 			fill = true;
     };
 
+	this.fill = function($fill)
+	{
+		if (utils.isset($fill))
+			$this.setFill($fill);
+
+		return fill;
+	};
+
 	this.setBottomClosed = function($bottomClosed)
     {
         bottomClosed = $bottomClosed;
@@ -151,6 +181,14 @@ function Cone($radius, $height)
 		if (!utils.isset(bottomClosed))
 			bottomClosed = true;
     };
+
+	this.bottomClosed = function($bottomClosed)
+	{
+		if (utils.isset($bottomClosed))
+			$this.setBottomClosed($bottomClosed);
+
+		return bottomClosed;
+	};
 
 	//////////////
 	// Héritage //

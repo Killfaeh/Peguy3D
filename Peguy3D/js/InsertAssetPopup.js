@@ -84,7 +84,7 @@ function InsertAssetPopup($asset)
 	var comboBoxTypes = new ComboBox("insert_type", optionsTypes, "path", false);
 	popup.getById('typeComboBox').appendChild(comboBoxTypes);
 
-	var convertToCodeCheckBox = new CheckBox(false, 25);
+	var convertToCodeCheckBox = new CheckBox(true, 25);
 	popup.getById("convertToCodeCheckBox").appendChild(convertToCodeCheckBox);
 	
 	//////////////
@@ -144,7 +144,7 @@ function InsertAssetPopup($asset)
 				else if (type === 'revolution')
 				{
 					code = code + 'var revolution = new Revolution(wire.samplePoints(), 32, 30.0);\n\r';
-					code = code + 'revolution.setAngle(360.0);\n\r';
+					//code = code + 'revolution.setAngle(360.0);\n\r';
 				}
 			}
 			else
@@ -175,7 +175,7 @@ function InsertAssetPopup($asset)
 				else if (type === 'revolution')
 				{
 					code = code + 'var revolution = new Revolution([], 32, 30.0);\n\r';
-					code = code + 'revolution.setAngle(360.0);\n\r';
+					//code = code + 'revolution.setAngle(360.0);\n\r';
 					code = code + 'revolution.loadFromAsset("' + asset.id + '", "' + selected.id + '");\n\r';
 				}
 			}

@@ -1,5 +1,3 @@
-
-//function Revolution($verticesList, $angle, $align, $resolution, $smoothTheta)
 function Revolution($verticesList, $resolution, $smoothTheta)
 {
 	///////////////
@@ -15,21 +13,8 @@ function Revolution($verticesList, $resolution, $smoothTheta)
 	if (!utils.isset(verticesList))
 		verticesList = [];
 
-	//*
 	if (!Array.isArray(verticesList) && utils.isset(verticesList.samplePoints))
 		verticesList = verticesList.samplePoints();
-	//*/
-	
-	/*
-	if (angle <= 0.0 || angle > 360.0)
-		angle = 360.0;
-	
-	if (!utils.isset(angle))
-		angle = 360.0;
-
-	if (!utils.isset(align))
-		align = '';
-	//*/
 
 	if (resolution < 3)
 		resolution = 3;
@@ -179,6 +164,14 @@ function Revolution($verticesList, $resolution, $smoothTheta)
 			angle = 360.0;
     };
 
+	this.angle = function($angle)
+	{
+		if (utils.isset($angle))
+			$this.setAngle($angle);
+
+		return angle;
+	};
+
 	this.setSmoothTheta = function($smoothTheta)
     {
         smoothTheta = $smoothTheta;
@@ -186,6 +179,14 @@ function Revolution($verticesList, $resolution, $smoothTheta)
 		if (!utils.isset(smoothTheta))
 			smoothTheta = 30.0;
     };
+
+	this.smoothTheta = function($smoothTheta)
+	{
+		if (utils.isset($smoothTheta))
+			$this.setSmoothTheta($smoothTheta);
+
+		return smoothTheta;
+	};
 
 	//////////////
 	// Héritage //

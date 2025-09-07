@@ -38,7 +38,7 @@ function Document()
 	var errorConsoleHTML = '<pre><code id="errorConsole" ></code></pre>';
 	var errorConsole = new Component(errorConsoleHTML);
 
-	grid.getById('rightPanel').appendChild(previewPanel);
+	grid.getById('topRightPanel').appendChild(previewPanel);
 	grid.getById('topPanel').appendChild(tabManager);
 	grid.getById('bottomPanel').appendChild(errorConsole);
 
@@ -155,68 +155,81 @@ function Document()
 
 	this.refresh = function() { previewPanel.refresh(); };
 
-	var execCode = function($code)
-	{
-		console.log($code);
-
-		var code = $code.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
-
-		var scriptParent = script.parentNode;
-
-		if (utils.isset(scriptParent))
-			scriptParent.removeChild(script);
-		
-		Doc.empty();
-		Doc.resolution = 32;
-		Doc.tolerance = Math.pow(10, -PEGUY.glPrecision);
-		viewManager.refresh();
-
-		script = new Component('<script type="text/javascript" >var scriptToExec = function() { ' + code + '\n};\n try { scriptToExec();\nviewManager.emptyError();\nviewManager.refresh(); }\ncatch($error) { viewManager.displayError($error); } </script>');
-		document.getElementById('main').appendChild(script);
-	};
-
 	var onChange = function($code)
 	{
 		$this.setSaved(false);
 	};
 
-	var execProgram = function()
+	var execProgram = async function()
 	{
-		//viewManager.save();
+		waitScreen.setContent("<h2>Computing... Please wait.</h2>");
+		document.getElementById('main').appendChild(waitScreen);
 
-		var codeToExec = mainScriptEditor.getCode();
+		viewManager.emptyError();
+		Doc.empty();
+		Doc.resolution = 32;
+		Doc.tolerance = Math.pow(10, -PEGUY.glPrecision);
+		viewManager.refresh();
 
-		var tabList = tabManager.getTabList();
-
-		for (var i = 0; i < tabList.length; i++)
+		if (utils.isset(execConfig))
 		{
-			var label = tabList[i].getLabel();
-			label = label.replace(/<span>/ig, "").replace(/<\/span>$/ig, "").replace(/\.js$/, "");
-			
-			if (label !== 'main')
-			{
-				var scriptCode = tabList[i].getContent().getCode();
-				codeToExec = codeToExec.replace("loadScript('" + label + "')", scriptCode);
-				codeToExec = codeToExec.replace("loadScript('" + label + ".js')", scriptCode);
-				codeToExec = codeToExec.replace('loadScript("' + label + '")', scriptCode);
-				codeToExec = codeToExec.replace('loadScript("' + label + '.js")', scriptCode);
-				codeToExec = codeToExec.replaceAll("loadScript('" + label + "')", '');
-				codeToExec = codeToExec.replaceAll("loadScript('" + label + ".js')", '');
-				codeToExec = codeToExec.replaceAll('loadScript("' + label + '")', '');
-				codeToExec = codeToExec.replaceAll('loadScript("' + label + '.js")', '');
-			}
-			else
-			{
-				codeToExec = codeToExec.replaceAll("loadScript('main')", '');
-				codeToExec = codeToExec.replaceAll("loadScript('main.js')", '');
-				codeToExec = codeToExec.replaceAll('loadScript("main")', '');
-				codeToExec = codeToExec.replaceAll('loadScript("main.js")', '');
-			}
+			for (var i = 0; i < execConfig.scripts.length; i++)
+				Loader.removeScript(execConfig.scripts[i].tmpFile);
 		}
 
-		execCode(codeToExec);
+		var plugins = window.electronAPI.refreshPlugIns();
 
-		previewPanel.resize();
+		for (var i = 0; i < plugins.length; i++)
+		{
+			Loader.removeScript(plugins[i]);
+			Loader.addScript(plugins[i], plugins[i]);
+		}
+
+		var tmpCode = $this.getCode();
+
+		execConfig = await window.electronAPI.execProgram(filePath, tmpCode);
+
+		if (utils.isset(execConfig))
+		{
+			var tmpFilePath = filePath;
+
+			for (var i = 0; i < execConfig.scripts.length; i++)
+			{
+				if (execConfig.scripts[i].name !== 'main' && execConfig.scripts[i].name !== 'main.js')
+					Loader.addScript('file://' + execConfig.scripts[i].tmpFile, execConfig.scripts[i].tmpFile);
+					//Loader.addScript('file://' + tmpFilePath + '/run/' + execConfig.scripts[i].tmpFile, execConfig.scripts[i].tmpFile);
+			}
+
+			Loader.onload = function()
+			{
+				for (var i = 0; i < execConfig.scripts.length; i++)
+				{
+					if (execConfig.scripts[i].name === 'main' || execConfig.scripts[i].name === 'main.js')
+						Loader.addScript('file://' + execConfig.scripts[i].tmpFile, execConfig.scripts[i].tmpFile);
+						//Loader.addScript('file://' + tmpFilePath + '/run/' + execConfig.scripts[i].tmpFile, execConfig.scripts[i].tmpFile);
+				}
+
+				Loader.onload = function()
+				{
+					var startTime = (new Date()).getTime();
+
+					viewManager.refresh();
+					document.getElementById('main').removeChild(waitScreen);
+
+					var endTime = (new Date()).getTime();
+					var execTime = endTime - startTime;
+					var sec = execTime/1000.0;
+					console.log("Execution time : " + sec);
+
+					errorConsole.getById('errorConsole').innerHTML = errorConsole.getById('errorConsole').innerHTML 
+																	+ '<span style="color: rgb(0, 255, 0);" >Execution time : ' + sec + 's</span><br /><br />';
+				};
+
+				Loader.load();
+			};
+
+			Loader.load();
+		}
 	};
 
 	this.insertAsset = function($data)
@@ -297,10 +310,22 @@ function Document()
 		}
 	};
 
-	this.displayError = function($error)
+	this.displayError = function($message, $source, $lineno, $colno, $error)
 	{
-		console.log($error);
-		errorConsole.getById('errorConsole').innerHTML = $error.stack;
+		var source = $source;
+
+		if (utils.isset(execConfig))
+		{
+			for (var i = 0; i < execConfig.scripts.length; i++)
+			{
+				if ($source.indexOf(execConfig.scripts[i].tmpFile) >= 0)
+					source = execConfig.scripts[i].name;
+			}
+		}
+
+		var stack = (new Error()).stack;
+		errorConsole.getById('errorConsole').innerHTML = errorConsole.getById('errorConsole').innerHTML 
+														+ '<span style="color: rgb(242, 98, 33);" >' + $message + ' (at ' + source + '.js:' + $lineno + ':' + $colno + ')</span><br /><br />';
 	};
 
 	this.emptyError = function()
@@ -312,6 +337,8 @@ function Document()
 		if (utils.isset(scriptParent))
 			scriptParent.removeChild(script);
 	};
+
+	this.updateStat = function() { grid.updateStat(); };
 
 	this.resize = function resize() { previewPanel.resize(); };
 

@@ -30,10 +30,27 @@ function Polygon($points, $axis)
 
         for (var i = 0; i < points.length; i++)
         {
-            if (i === 0)
-                curve.moveTo([points[i][0], points[i][1]]);
-            else 
-                curve.lineTo([points[i][0], points[i][1]]);
+            if (axis === 'x')
+            {
+                if (i === 0)
+                    curve.moveTo([0.0, points[i][0], points[i][1]]);
+                else 
+                    curve.lineTo([0.0, points[i][0], points[i][1]]);
+            }
+            else if (axis === 'y')
+            {
+                if (i === 0)
+                    curve.moveTo([points[i][0], 0.0, points[i][1]]);
+                else 
+                    curve.lineTo([points[i][0], 0.0, points[i][1]]);
+            }
+            else
+            {
+                if (i === 0)
+                    curve.moveTo([points[i][0], points[i][1], 0.0]);
+                else 
+                    curve.lineTo([points[i][0], points[i][1], 0.0]);
+            }
         }
 
         curve.close();
@@ -96,10 +113,38 @@ function Polygon($points, $axis)
     this.setPoints = function($points)
     {
         points = $points;
+
+        if (!utils.isset(points))
+            points = [];
+
         updatePath();
     };
 
-    this.points = function($points) { $this.setPoints($points); };
+    this.points = function($points)
+    {
+        if (utils.isset($points))
+            $this.setPoints($points);
+
+        return points;
+    };
+
+    this.setAxis = function($axis)
+    {
+        axis = $axis;
+
+        if (!utils.isset(axis))
+            axis = 'z';
+
+        updatePath();
+    };
+
+    this.axis = function($axis)
+    {
+        if (utils.isset($axis))
+            $this.setAxis($axis);
+
+        return axis;
+    };
 
 	//////////////
 	// Héritage //

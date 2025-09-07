@@ -100,7 +100,13 @@ function Sphere($radius)
             radius = 1.0;
     };
 
-    this.radius = function($radius) { $this.setRadius($radius); };
+	this.radius = function($radius)
+	{
+		if (utils.isset($radius))
+			$this.setRadius($radius);
+
+		return radius;
+	};
 
 	this.setAngleTheta = function($angleTheta)
     {
@@ -110,6 +116,15 @@ function Sphere($radius)
 			angleTheta = 360.0;
     };
 
+	this.theta = function($angleTheta)
+	{
+		if (utils.isset($angleTheta))
+			$this.setAngleTheta($angleTheta);
+
+		return angleTheta;
+	};
+
+
 	this.setAnglePhi = function($anglePhi)
     {
         anglePhi = $anglePhi;
@@ -118,6 +133,14 @@ function Sphere($radius)
 			anglePhi = 180.0;
     };
 
+	this.phi = function($anglePhi)
+	{
+		if (utils.isset($anglePhi))
+			$this.setAnglePhi($anglePhi);
+
+		return anglePhi;
+	};
+
 	this.setOffsetAnglePhi = function($offsetAnglePhi)
     {
         offsetAnglePhi = $offsetAnglePhi;
@@ -125,6 +148,14 @@ function Sphere($radius)
         if (!utils.isset(offsetAnglePhi))
 			offsetAnglePhi = 0.0;
     };
+
+	this.offsetPhi = function($offsetAnglePhi)
+	{
+		if (utils.isset($offsetAnglePhi))
+			$this.setOffsetAnglePhi($offsetAnglePhi);
+
+		return offsetAnglePhi;
+	};
 
 	//////////////
 	// Héritage //

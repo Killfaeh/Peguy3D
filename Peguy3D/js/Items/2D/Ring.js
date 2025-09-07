@@ -1,4 +1,4 @@
-function Ring($radius1, $radius2, $angle)
+function Ring($radius1, $radius2)
 {
 	///////////////
 	// Attributs //
@@ -6,7 +6,7 @@ function Ring($radius1, $radius2, $angle)
 
     var radius1 = $radius1;
     var radius2 = $radius2;
-    var angle = $angle;
+    var angle = 360.0;
 
     if (!utils.isset(radius1))
         radius1 = 0.5;
@@ -16,26 +16,57 @@ function Ring($radius1, $radius2, $angle)
     if (!utils.isset(radius2))
         radius2 = 1.0;
 
-	if (!utils.isset(angle))
-		angle = 360.0;
-
-	var object3D = new Object3D();
+	var curve = new Path([]);
 
 	//////////////
 	// Méthodes //
 	//////////////
 
-	this.computeSVG = function()
+	var updatePath = function()
     {
-		var radius = Math.max(radius1, radius2);
-		
-        //var objectCode = '<circle cx="0" cy="0" r="' + radius + '" />';
-		var objectCode = '<path d="M -' + radius + ' 0 A ' + radius + ' ' + radius + ' 0 0 0 ' + radius + ' 0 A ' + radius + ' ' + radius + ' 0 0 0 -' + radius + ' 0 Z" />';
+		curve.setOperations([]);
 
-        var svgObject = new Component(objectCode);
+		var minRadius = Math.min(radius1, radius2);
+		var maxRadius = Math.max(radius1, radius2);
 
-        $this['super'].computeSVG(svgObject);
+		if (angle < 360.0)
+		{
+			var radAngle = angle/180.0*Math.PI;
+			var innerEndX = minRadius*Math.cos(radAngle);
+			var innerEndY = minRadius*Math.sin(radAngle);
+			var outerEndX = maxRadius*Math.cos(radAngle);
+			var outerEndY = maxRadius*Math.sin(radAngle);
+			var innerFlag2 = 0;
+			var outerFlag2 = 0;
 
+			if (angle > 180.0)
+			{
+				innerFlag2 = 1;
+				outerFlag2 = 1;
+			}
+
+			curve.moveTo([maxRadius, 0.0]);
+			curve.arc([maxRadius, maxRadius], 0, outerFlag2, 0, [outerEndX, outerEndY]);
+			curve.lineTo([innerEndX, innerEndY]);
+			curve.arc([minRadius, minRadius], 0, innerFlag2, 0, [minRadius, 0.0]);
+			curve.close();
+		}
+		else
+		{
+			curve.moveTo([maxRadius, 0.0]);
+			curve.arc([maxRadius, maxRadius], 0, 0, 0, [-maxRadius, 0.0]);
+			curve.arc([maxRadius, maxRadius], 0, 0, 1, [maxRadius, 0.0]);
+			curve.moveTo([minRadius, 0.0]);
+			curve.arc([minRadius, minRadius], 0, 0, 0, [-minRadius, 0.0]);
+			curve.arc([minRadius, minRadius], 0, 0, 1, [minRadius, 0.0]);
+			//curve.close();
+		}
+    };
+
+	this.computeSVG = function computeSVG()
+    {
+        updatePath();
+        var svgObject = $this.execSuper('computeSVG', [], computeSVG);
         return svgObject;
     };
 
@@ -90,6 +121,28 @@ function Ring($radius1, $radius2, $angle)
 			radius2 = 1.0;
     };
 
+	this.setRadius = function($radius1, $radius2)
+    {
+        radius1 = $radius1;
+        radius2 = $radius2;
+    
+        if (!utils.isset(radius1))
+			radius1 = 0.5;
+        
+        if (!utils.isset(radius2))
+			radius2 = 1.0;
+
+        updatePath();
+    };
+
+    this.radius = function($radius1, $radius2)
+	{
+		if (utils.isset($radius1) && utils.isset($radius2))
+			$this.setRadius($radius1, $radius2);
+
+		return [radius1, radius2];
+	};
+
 	this.setAngle = function($angle)
     {
         angle = $angle;
@@ -98,11 +151,19 @@ function Ring($radius1, $radius2, $angle)
 			angle = 360.0;
     };
 
+	this.angle = function($angle)
+	{
+		if (utils.isset($angle))
+			$this.setAngle($angle);
+
+		return angle;
+	};
+
 	//////////////
 	// Héritage //
 	//////////////
 	
-	var $this = utils.extend(object3D, this);
+	var $this = utils.extend(curve, this);
 	return $this; 
 }
 

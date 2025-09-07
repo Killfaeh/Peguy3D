@@ -60,29 +60,94 @@ async function handleLoadSettingsInGUI()
 	//mainWindow.webContents.executeJavaScript("viewManager.update3dAssetManager(" + JSON.stringify(threeDAssets) + ");");
 }
 
-async function loadPlugIns()
+function loadPlugIns()
 {
+	var tmpPluginsPath = userHomeDir + '/Documents/Peguy/3D/PlugIns/tmp'; 
+
+	if (fs.existsSync(tmpPluginsPath))
+		fs.rmSync(tmpPluginsPath, { recursive: true, force: true });
+		
+	fs.mkdirSync(tmpPluginsPath);
+
+	var index = 1;
+	var timestamp = (new Date()).getTime();
+
+	plugIns = [];
+
 	var files = fs.readdirSync('PlugIns');
 
 	for (var file of files)
 	{
-		if (/\.js$/.test(file))
+		if (fs.lstatSync('PlugIns/' + file).isDirectory())
 		{
-			var filepath = path.join('PlugIns', file);
-			plugIns.push(filepath);
+			var subFiles = fs.readdirSync('PlugIns/' + file);
+
+			for (var subFile of subFiles)
+			{
+				if (subFile !== 'main.js')
+				{
+					var tmpFilePath = tmpPluginsPath + '/plugin-' + timestamp + '-' + index + '.js';
+					var filepath = __dirname + '/PlugIns/' + file + '/' + subFile;
+					var fileContent = fs.readFileSync(filepath, "utf8");
+					fs.writeFileSync(tmpFilePath, fileContent + '\n\nif (Loader !== null && Loader !== undefined)\n\tLoader.hasLoaded("' + tmpFilePath + '");');
+					plugIns.push(tmpFilePath);
+				}
+			}
 		}
+		else if (/\.js$/.test(file))
+		{
+			var tmpFilePath = tmpPluginsPath + '/plugin-' + timestamp + '-' + index + '.js';
+			var filepath = __dirname + '/' + path.join('PlugIns', file);
+			var fileContent = fs.readFileSync(filepath, "utf8");
+			fs.writeFileSync(tmpFilePath, fileContent + '\n\nif (Loader !== null && Loader !== undefined)\n\tLoader.hasLoaded("' + tmpFilePath + '");');
+			plugIns.push(tmpFilePath);
+		}
+
+		index++;
 	}
 
 	files = fs.readdirSync(userHomeDir + '/Documents/Peguy/3D/PlugIns');
 
 	for (var file of files)
 	{
-		if (/\.js$/.test(file))
+		if (fs.lstatSync(userHomeDir + '/Documents/Peguy/3D/PlugIns/' + file).isDirectory())
 		{
-			var filepath = path.join(userHomeDir + '/Documents/Peguy/3D/PlugIns', file);
-			plugIns.push(filepath);
+			var subFiles = fs.readdirSync(userHomeDir + '/Documents/Peguy/3D/PlugIns/' + file);
+
+			//console.log(subFiles);
+
+			for (var subFile of subFiles)
+			{
+				if (!fs.lstatSync(userHomeDir + '/Documents/Peguy/3D/PlugIns/' + file + '/' + subFile).isDirectory() 
+					&& subFile !== 'main.js' && subFile !== 'project.json' && subFile !== 'run')
+				{
+					var tmpFilePath = tmpPluginsPath + '/plugin-' + timestamp + '-' + index + '.js';
+					var filepath = userHomeDir + '/Documents/Peguy/3D/PlugIns/' + file + '/' + subFile;
+					//console.log(subFile);
+					var fileContent = fs.readFileSync(filepath, "utf8");
+					fs.writeFileSync(tmpFilePath, fileContent + '\n\nif (Loader !== null && Loader !== undefined)\n\tLoader.hasLoaded("' + tmpFilePath + '");');
+					plugIns.push(tmpFilePath);
+				}
+			}
 		}
+		else if (/\.js$/.test(file))
+		{
+			var tmpFilePath = tmpPluginsPath + '/plugin-' + timestamp + '-' + index + '.js';
+			var filepath = path.join(userHomeDir + '/Documents/Peguy/3D/PlugIns', file);
+			var fileContent = fs.readFileSync(filepath, "utf8");
+			fs.writeFileSync(tmpFilePath, fileContent + '\n\nif (Loader !== null && Loader !== undefined)\n\tLoader.hasLoaded("' + tmpFilePath + '");');
+			plugIns.push(tmpFilePath);
+		}
+
+		index++;
 	}
+}
+
+async function handleRefreshPlugIns()
+{
+	loadPlugIns();
+	await mainWindow.webContents.executeJavaScript("viewManager.updatePlugIns(" + JSON.stringify({ plugIns: plugIns }) + ");");
+	return plugIns;
 }
 
 async function handleOpenFile()
@@ -196,6 +261,40 @@ async function handleSaveFile($event, $filePath, $content)
 	updateRecentFiles($filePath);
 
 	return output;
+}
+
+async function handleExecProgram($event, $filePath, $content)
+{
+	var tmp = $filePath.split('/');
+	var fileName = tmp[tmp.length-1];
+
+	if ($filePath === null || $filePath === '')
+		$filePath = userHomeDir + '/Documents/Peguy/3D';
+
+	if (fs.existsSync($filePath + '/run'))
+		fs.rmSync($filePath + '/run', { recursive: true, force: true });
+		
+	fs.mkdirSync($filePath + '/run');
+
+	var index = 1;
+	var timestamp = (new Date()).getTime();
+
+	if (fileName === null || fileName === '')
+		fileName = 'tmp';
+
+	var projectConfig = { projectName: fileName, scripts: [] };
+
+	for (key in $content)
+	{
+		var tmpFileName = key + '-' + timestamp + '-' + index + '.js';
+		var tmpFilePath = $filePath + '/run/' + tmpFileName;
+		var codeToSave = $content[key] + '\n\nif (Loader !== null && Loader !== undefined)\n\tLoader.hasLoaded("' + tmpFilePath + '");';
+		projectConfig.scripts.push({ name: key, tmpFile: tmpFilePath });
+		fs.writeFileSync(tmpFilePath, codeToSave);
+		index++;
+	}
+
+	return projectConfig;
 }
 
 async function handleExportToOBJ($event, $materials, $content)
@@ -434,10 +533,12 @@ app.whenReady().then(() =>
 {
 	ipcMain.on('setNotSavedFiles', handleSetNotSavedFiles);
 	ipcMain.handle('loadSettingsInGUI', handleLoadSettingsInGUI);
+	ipcMain.handle('refreshPlugIns', handleRefreshPlugIns);
 	ipcMain.handle('openFile', handleOpenFile);
 	ipcMain.handle('openRecentFile', handleOpenRecentFile);
 	ipcMain.handle('saveFileAs', handleSaveFileAs);
 	ipcMain.handle('saveFile', handleSaveFile);
+	ipcMain.handle('execProgram', handleExecProgram);
 	ipcMain.handle('exportToOBJ', handleExportToOBJ);
 	ipcMain.handle('exportToCOLLADA', handleExportToCOLLADA);
 	//ipcMain.handle('exportToPNG', handleExportToPNG);

@@ -1,4 +1,3 @@
-//function Cylinder($radius1, $radius2, $height, $angle, $deltaX, $deltaY, $fill, $bottomClosed, $topClosed)
 function Cylinder($radius1, $radius2, $height)
 {
 	///////////////
@@ -23,26 +22,6 @@ function Cylinder($radius1, $radius2, $height)
 
 	if (!utils.isset(height))
 		height = 2.0;
-
-	/*
-	if (!utils.isset(angle))
-		angle = 360.0;
-
-	if (!utils.isset(deltaX))
-		deltaX = 0.0;
-
-	if (!utils.isset(deltaY))
-		deltaY = 0.0;
-
-	if (!utils.isset(fill))
-		fill = true;
-
-	if (!utils.isset(bottomClosed))
-		bottomClosed = true;
-
-	if (!utils.isset(topClosed))
-		topClosed = true;
-	//*/
 
 	var object3D = new Object3D();
 
@@ -114,6 +93,14 @@ function Cylinder($radius1, $radius2, $height)
 			radius1 = 1.0;
     };
 
+	this.radius1 = function($radius1)
+	{
+		if (utils.isset($radius1))
+			$this.setRadius1($radius1);
+
+		return radius1;
+	};
+
 	this.setRadius2 = function($radius2)
     {
         radius2 = $radius2;
@@ -121,6 +108,14 @@ function Cylinder($radius1, $radius2, $height)
 		if (!utils.isset(radius2))
 			radius2 = 1.0;
     };
+
+	this.radius2 = function($radius2)
+	{
+		if (utils.isset($radius2))
+			$this.setRadius2($radius2);
+
+		return radius2;
+	};
 
 	this.setHeight = function($height)
     {
@@ -130,6 +125,14 @@ function Cylinder($radius1, $radius2, $height)
 			height = 2.0;
     };
 
+	this.height = function($height)
+	{
+		if (utils.isset($height))
+			$this.setHeight($height);
+
+		return height;
+	};
+
 	this.setAngle = function($angle)
     {
         angle = $angle;
@@ -137,6 +140,14 @@ function Cylinder($radius1, $radius2, $height)
 		if (!utils.isset(angle))
 			angle = 360.0;
     };
+
+	this.angle = function($angle)
+	{
+		if (utils.isset($angle))
+			$this.setAngle($angle);
+
+		return angle;
+	};
 
 	this.setDeltaX = function($deltaX)
     {
@@ -146,6 +157,14 @@ function Cylinder($radius1, $radius2, $height)
 			deltaX = 0.0;
     };
 
+	this.deltaX = function($deltaX)
+	{
+		if (utils.isset($deltaX))
+			$this.setDeltaX($deltaX);
+
+		return deltaX;
+	};
+
 	this.setDeltaY = function($deltaY)
     {
         deltaY = $deltaY;
@@ -153,6 +172,14 @@ function Cylinder($radius1, $radius2, $height)
 		if (!utils.isset(deltaY))
 			deltaY = 0.0;
     };
+
+	this.deltaY = function($deltaY)
+	{
+		if (utils.isset($deltaY))
+			$this.setDeltaY($deltaY);
+
+		return deltaY;
+	};
 
 	this.setFill = function($fill)
     {
@@ -162,6 +189,14 @@ function Cylinder($radius1, $radius2, $height)
 			fill = true;
     };
 
+	this.fill = function($fill)
+	{
+		if (utils.isset($fill))
+			$this.setFill($fill);
+
+		return fill;
+	};
+
 	this.setBottomClosed = function($bottomClosed)
     {
         bottomClosed = $bottomClosed;
@@ -170,6 +205,14 @@ function Cylinder($radius1, $radius2, $height)
 			bottomClosed = true;
     };
 
+	this.bottomClosed = function($bottomClosed)
+	{
+		if (utils.isset($bottomClosed))
+			$this.setBottomClosed($bottomClosed);
+
+		return bottomClosed;
+	};
+
 	this.setTopClosed = function($topClosed)
     {
         topClosed = $topClosed;
@@ -177,6 +220,14 @@ function Cylinder($radius1, $radius2, $height)
 		if (!utils.isset(topClosed))
 			topClosed = true;
     };
+
+	this.topClosed = function($topClosed)
+	{
+		if (utils.isset($topClosed))
+			$this.setTopClosed($topClosed);
+
+		return topClosed;
+	};
 
 	//////////////
 	// Héritage //

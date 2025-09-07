@@ -85,7 +85,13 @@ function Cuboid($widthX, $widthY, $widthZ)
 			widthZ = 1.0;
     };
 
-    this.size = function($widthX, $widthY, $widthZ) { $this.setSize($widthX, $widthY, $widthZ); };
+    this.size = function($widthX, $widthY, $widthZ)
+	{
+		if (utils.isset($widthX) && utils.isset($widthY) && utils.isset($widthZ))
+			$this.setSize($widthX, $widthY, $widthZ);
+
+		return [$widthX, $widthY, $widthZ];
+	};
 
 	//////////////
 	// Héritage //

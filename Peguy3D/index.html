@@ -108,8 +108,10 @@
 				}
 			};
 
+			var execConfig = null;
 			var appData;
 			var viewManager;
+			var waitScreen;
 			var notifCenter;
 			var progressBar;
 
@@ -157,6 +159,7 @@
 			Loader.addScript('js/Items/Transformations/Translation.js?token=' + Loader.getToken(), 'translation');
 			Loader.addScript('js/Items/Transformations/Rotation.js?token=' + Loader.getToken(), 'rotation');
 			Loader.addScript('js/Items/Transformations/Scale.js?token=' + Loader.getToken(), 'scale');
+			Loader.addScript('js/Items/Transformations/Align.js?token=' + Loader.getToken(), 'align');
 			//Loader.addScript('js/Items/Transformations/SkewX.js?token=' + Loader.getToken(), 'skewX');
 			//Loader.addScript('js/Items/Transformations/SkewY.js?token=' + Loader.getToken(), 'skewY');
 			Loader.addScript('js/Items/VectorObject.js?token=' + Loader.getToken(), 'vectorObject');
@@ -188,11 +191,18 @@
 			Loader.addScript('js/Items/3D/Sphere.js?token=' + Loader.getToken(), 'sphere');
 			Loader.addScript('js/Items/2D/RibbonFromCurve.js?token=' + Loader.getToken(), 'ribbonFromCurve');
 			Loader.addScript('js/Items/3D/ExtrudeCurve.js?token=' + Loader.getToken(), 'extrudeCurve');
+			Loader.addScript('js/Items/3D/PipeFromCurve.js?token=' + Loader.getToken(), 'pipeFromCurve');
+			Loader.addScript('js/Items/Points/PointsPattern.js?token=' + Loader.getToken(), 'pointsPattern');
+			Loader.addScript('js/Items/Points/GridPattern.js?token=' + Loader.getToken(), 'gridPattern');
+			Loader.addScript('js/Items/Points/FibonacciPattern.js?token=' + Loader.getToken(), 'fibonacciPattern');
+			Loader.addScript('js/Items/Points/FibonacciLatticePattern.js?token=' + Loader.getToken(), 'fibonacciLatticePattern');
 			Loader.addScript('js/Items/Asset.js?token=' + Loader.getToken(), 'asset');
 			Loader.addScript('js/Items/Instance.js?token=' + Loader.getToken(), 'instance');
 			Loader.addScript('js/Items/Group.js?token=' + Loader.getToken(), 'group');
+			Loader.addScript('js/Items/Collection.js?token=' + Loader.getToken(), 'collection');
 			Loader.addScript('js/Items/Material.js?token=' + Loader.getToken(), 'material');
 			Loader.addScript('js/Items/Point.js?token=' + Loader.getToken(), 'point');
+			Loader.addScript('js/Items/Stack.js?token=' + Loader.getToken(), 'stack');
 			Loader.addScript('js/Doc.js?token=' + Loader.getToken(), 'doc');
 			Loader.addScript('js/Document.js?token=' + Loader.getToken(), 'document');
 			
@@ -217,8 +227,11 @@
 				
 				Debug.onError = function($message, $source, $lineno, $colno, $error)
 				{
-					//cancelSave3D();
-					
+					if (waitScreen)
+						document.getElementById('main').removeChild(waitScreen);
+
+					if (viewManager)
+						viewManager.displayError($message, $source, $lineno, $colno, $error);
 				};
 				
 				viewManager = new ViewManager();
@@ -226,6 +239,8 @@
 				viewManager.resize();
 				document.getElementById('main').appendChild(viewManager);
 				viewManager.focus();
+
+				waitScreen = new FreezeScreen("<h2>Computing... Please wait.</h2>");
 				
 				document.getElementById('main').onDrop = function($event) { Events.emit('onDropFiles', [$event]); };
 				
@@ -248,6 +263,6 @@
 			//window.electronAPI.setTitle("POUET ! ");
 
 		</script>
-		
+
 	</body>
 </html>

@@ -24,11 +24,31 @@ function Ellipse($rX, $rY)
 
     var updatePath = function()
     {
-		curve.setOperations([]);
-		curve.moveTo([-rX, 0.0]);
-		curve.arc([rX, rY], 0, 0, 0, [rX, 0]);
-		curve.arc([rX, rY], 0, 0, 0, [-rX, 0]);
-		curve.close();
+        curve.setOperations([]);
+
+        if (angle < 360.0)
+		{
+            var radAngle = angle/180.0*Math.PI;
+            var endX = rX*Math.cos(radAngle);
+            var endY = rY*Math.sin(radAngle);
+            var flag2 = 0;
+            var flag3 = 0;
+
+            if (angle > 180.0)
+                flag2 = 1;
+
+            curve.moveTo([rX, 0.0]);
+            curve.arc([rX, rY], 0, flag2, flag3, [endX, endY]);
+            curve.lineTo([0.0, 0.0]);
+            curve.close();
+		}
+        else
+        {
+			curve.moveTo([rX, 0.0]);
+			curve.arc([rX, rY], 0, 0, 0, [-rX, 0.0]);
+			curve.arc([rX, rY], 0, 0, 1, [rX, 0.0]);
+            //curve.close();
+        }
     };
 
 	this.computeSVG = function computeSVG()
@@ -75,21 +95,45 @@ function Ellipse($rX, $rY)
 
 	// SET
 	
-    this.setRadius = function($rx, $ry)
+    this.setRadius = function($rX, $rY)
     {
         rX = $rX;
         rY = $rY;
     
         if (!utils.isset(rX))
-            rX = 50;
+            rX = 1.0;
         
         if (!utils.isset(rY))
-            rY = 50;
+            rY = 1.0;
 
         updatePath();
     };
 
-    this.radius = function($rX, $rY) { $this.setRadius($rX, $rY); };
+    this.radius = function($rX, $rY)
+	{
+		if (utils.isset($rX) && utils.isset($rY))
+			$this.setRadius($rX, $rY);
+
+		return [rX, rY];
+	};
+
+	this.setAngle = function($angle)
+    {
+        angle = $angle;
+
+        if (!utils.isset(angle))
+            angle = 360.0;
+
+		updatePath();
+    };
+
+    this.angle = function($angle)
+	{
+		if (utils.isset($angle))
+			$this.setAngle($angle);
+
+		return angle;
+	};
 
 	//////////////
 	// Héritage //

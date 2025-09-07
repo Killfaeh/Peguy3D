@@ -14,12 +14,12 @@ Doc =
         }
         else
         {
-            console.log("Add to Doc : ");
-            console.log($input);
+            //console.log("Add to Doc : ");
+            //console.log($input);
 
             var type = $input.getType();
 
-            console.log("Type : " + $input.getType);
+            //console.log("Type : " + $input.getType);
 
             if (type === 'object' || type === 'curve')
                 Doc.elementsList.push($input);
@@ -86,7 +86,7 @@ Doc =
 
         for (var i = 0; i < Doc.elementsList.length; i++)
         {
-            console.log(Doc.elementsList[i]);
+            //console.log(Doc.elementsList[i]);
             group.addInstance(Doc.elementsList[i].compute3D());
         }
 
@@ -101,6 +101,7 @@ Doc =
             groupList[groupList.length-1].addInstance(group);
         }
 
+        console.log("J'ai fini le calcul 3D");
         return outputGroup;
     }
 };

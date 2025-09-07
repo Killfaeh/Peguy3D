@@ -82,15 +82,29 @@ function Square($size)
         updatePath();
     };
 
-    this.size = function($size) { $this.setSize($size); };
+    this.size = function($size)
+	{
+		if (utils.isset($size))
+			$this.setSize($size);
 
+		return size;
+	};
+
+    /*
     this.setRound = function($round)
     {
         round = $round;
         updatePath();
     };
 
-    this.round = function($round) { $this.setRound($round); };
+    this.round = function($round)
+	{
+		if (utils.isset($round))
+			$this.setRound($round);
+
+		return round;
+	};
+    //*/
 
     this.clone = function()
 	{

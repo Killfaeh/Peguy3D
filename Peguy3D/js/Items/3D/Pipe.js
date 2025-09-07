@@ -1,5 +1,3 @@
-
-//function Pipe($radius1, $radius2, $radius3, $radius4, $height, $angle, $deltaX, $deltaY, $fill, $bottomClosed, $topClosed)
 function Pipe($radius1, $radius2, $radius3, $radius4, $height)
 {
 	///////////////
@@ -32,26 +30,6 @@ function Pipe($radius1, $radius2, $radius3, $radius4, $height)
 
 	if (!utils.isset(height))
 		height = 2.0;
-
-	/*
-	if (!utils.isset(angle))
-		angle = 360.0;
-
-	if (!utils.isset(deltaX))
-		deltaX = 0.0;
-
-	if (!utils.isset(deltaY))
-		deltaY = 0.0;
-
-	if (!utils.isset(fill))
-		fill = true;
-
-	if (!utils.isset(bottomClosed))
-		bottomClosed = true;
-
-	if (!utils.isset(topClosed))
-		topClosed = true;
-	//*/
 
 	var object3D = new Object3D();
 
@@ -125,6 +103,14 @@ function Pipe($radius1, $radius2, $radius3, $radius4, $height)
 			radius1 = 0.5;
     };
 
+	this.radius1 = function($radius1)
+	{
+		if (utils.isset($radius1))
+			$this.setRadius1($radius1);
+
+		return radius1;
+	};
+
 	this.setRadius2 = function($radius2)
     {
         radius2 = $radius2;
@@ -132,6 +118,14 @@ function Pipe($radius1, $radius2, $radius3, $radius4, $height)
 		if (!utils.isset(radius2))
 			radius2 = 1.0;
     };
+
+	this.radius2 = function($radius2)
+	{
+		if (utils.isset($radius2))
+			$this.setRadius2($radius2);
+
+		return radius2;
+	};
 
 	this.setRadius3 = function($radius3)
     {
@@ -141,6 +135,14 @@ function Pipe($radius1, $radius2, $radius3, $radius4, $height)
 			radius3 = 0.5;
     };
 
+	this.radius3 = function($radius3)
+	{
+		if (utils.isset($radius3))
+			$this.setRadius3($radius3);
+
+		return radius3;
+	};
+
 	this.setRadius4 = function($radius4)
     {
         radius4 = $radius4;
@@ -148,6 +150,14 @@ function Pipe($radius1, $radius2, $radius3, $radius4, $height)
 		if (!utils.isset(radius4))
 			radius4 = 1.0;
     };
+
+	this.radius4 = function($radius4)
+	{
+		if (utils.isset($radius4))
+			$this.setRadius4($radius4);
+
+		return radius4;
+	};
 
 	this.setHeight = function($height)
     {
@@ -157,6 +167,14 @@ function Pipe($radius1, $radius2, $radius3, $radius4, $height)
 			height = 2.0;
     };
 
+	this.height = function($height)
+	{
+		if (utils.isset($height))
+			$this.setHeight($height);
+
+		return height;
+	};
+
 	this.setAngle = function($angle)
     {
         angle = $angle;
@@ -164,6 +182,14 @@ function Pipe($radius1, $radius2, $radius3, $radius4, $height)
 		if (!utils.isset(angle))
 			angle = 360.0;
     };
+
+	this.angle = function($angle)
+	{
+		if (utils.isset($angle))
+			$this.setAngle($angle);
+
+		return angle;
+	};
 
 	this.setDeltaX = function($deltaX)
     {
@@ -173,6 +199,14 @@ function Pipe($radius1, $radius2, $radius3, $radius4, $height)
 			deltaX = 0.0;
     };
 
+	this.deltaX = function($deltaX)
+	{
+		if (utils.isset($deltaX))
+			$this.setDeltaX($deltaX);
+
+		return deltaX;
+	};
+
 	this.setDeltaY = function($deltaY)
     {
         deltaY = $deltaY;
@@ -180,6 +214,14 @@ function Pipe($radius1, $radius2, $radius3, $radius4, $height)
 		if (!utils.isset(deltaY))
 			deltaY = 0.0;
     };
+
+	this.deltaY = function($deltaY)
+	{
+		if (utils.isset($deltaY))
+			$this.setDeltaY($deltaY);
+
+		return deltaY;
+	};
 
 	this.setFill = function($fill)
     {
@@ -189,6 +231,14 @@ function Pipe($radius1, $radius2, $radius3, $radius4, $height)
 			fill = true;
     };
 
+	this.fill = function($fill)
+	{
+		if (utils.isset($fill))
+			$this.setFill($fill);
+
+		return fill;
+	};
+
 	this.setBottomClosed = function($bottomClosed)
     {
         bottomClosed = $bottomClosed;
@@ -197,6 +247,14 @@ function Pipe($radius1, $radius2, $radius3, $radius4, $height)
 			bottomClosed = true;
     };
 
+	this.bottomClosed = function($bottomClosed)
+	{
+		if (utils.isset($bottomClosed))
+			$this.setBottomClosed($bottomClosed);
+
+		return bottomClosed;
+	};
+
 	this.setTopClosed = function($topClosed)
     {
         topClosed = $topClosed;
@@ -204,6 +262,14 @@ function Pipe($radius1, $radius2, $radius3, $radius4, $height)
 		if (!utils.isset(topClosed))
 			topClosed = true;
     };
+
+	this.topClosed = function($topClosed)
+	{
+		if (utils.isset($topClosed))
+			$this.setTopClosed($topClosed);
+
+		return topClosed;
+	};
 
 	//////////////
 	// Héritage //

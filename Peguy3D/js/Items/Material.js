@@ -14,6 +14,10 @@ function Material($name)
 
     var glMaterial = new GLMaterial(name);
 
+	var baseColor = [0.5, 0.5, 0.5];
+	var specularColor = [1.0, 1.0, 1.0];
+	var specular = 1.0;
+
 	//////////////
 	// Méthodes //
 	//////////////
@@ -40,9 +44,47 @@ function Material($name)
 
 	// SET
 	
-    this.setBaseColor = function($baseColor) { glMaterial.setBaseColor($baseColor); };
-	this.setSpecularColor = function($specularColor) { glMaterial.setSpecularColor($specularColor); };
-	this.setSpecular = function($specular) { glMaterial.setSpecular($specular); };
+    this.setBaseColor = function($baseColor)
+	{
+		baseColor = $baseColor;
+		glMaterial.setBaseColor(baseColor);
+	};
+
+	this.setSpecularColor = function($specularColor)
+	{
+		specularColor = $specularColor;
+		glMaterial.setSpecularColor(specularColor);
+	};
+
+	this.setSpecular = function($specular)
+	{
+		specular = $specular;
+		glMaterial.setSpecular(specular);
+	};
+
+	this.baseColor = function($baseColor)
+	{
+		if (utils.isset($baseColor))
+			$this.setBaseColor($baseColor);
+
+		return baseColor;
+	};
+
+	this.specularColor = function($specularColor)
+	{
+		if (utils.isset($specularColor))
+			$this.setSpecularColor($specularColor);
+		
+		return specularColor;
+	};
+
+	this.specular = function($specular)
+	{
+		if (utils.isset($specular))
+			$this.setSpecular($specular);
+		
+		return specular;
+	};
 	
 	//////////////
 	// Héritage //

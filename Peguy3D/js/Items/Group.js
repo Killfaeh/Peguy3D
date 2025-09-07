@@ -1,10 +1,13 @@
-function Group()
+function Group($elementsList)
 {
 	///////////////
 	// Attributs //
 	///////////////
 
-    var elementsList = [];
+    var elementsList = $elementsList;
+
+    if (!utils.isset(elementsList))
+        elementsList = [];
 
 	var object3D = new Object3D();
 
@@ -34,6 +37,7 @@ function Group()
             group.addInstance(elementsList[i].compute3D());
 
         var outputGroup = $this['super'].compute3D(group);
+        //var outputGroup = $this.computeTransforms(group);
         return outputGroup;
     };
 

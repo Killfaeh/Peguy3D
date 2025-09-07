@@ -1,5 +1,3 @@
-
-//function Pyramid($radius, $height, $angle, $deltaX, $deltaY, $thetaResolution, $fill, $bottomClosed)
 function Pyramid($radius, $height, $thetaResolution)
 {
 	///////////////
@@ -22,30 +20,8 @@ function Pyramid($radius, $height, $thetaResolution)
 	if (!utils.isset(height))
 		height = 2.0;
 
-	/*
-	if (!utils.isset(angle))
-		angle = 360.0;
-
-	if (!utils.isset(deltaX))
-		deltaX = 0.0;
-
-	if (!utils.isset(deltaY))
-		deltaY = 0.0;
-	//*/
-
 	if (!utils.isset(thetaResolution) || thetaResolution < 3)
 		thetaResolution = 3;
-
-	//if (!utils.isset(heightResolution) || heightResolution < 2)
-	//	heightResolution = 2;
-
-	/*
-	if (!utils.isset(fill))
-		fill = true;
-
-	if (!utils.isset(bottomClosed))
-		bottomClosed = true;
-	//*/
 
 	var object3D = new Object3D();
 
@@ -117,6 +93,14 @@ function Pyramid($radius, $height, $thetaResolution)
 			radius = 1.0;
     };
 
+	this.radius = function($radius)
+	{
+		if (utils.isset($radius))
+			$this.setRadius($radius);
+
+		return radius;
+	};
+
 	this.setHeight = function($height)
     {
         height = $height;
@@ -124,6 +108,14 @@ function Pyramid($radius, $height, $thetaResolution)
 		if (!utils.isset(height))
 			height = 2.0;
     };
+
+	this.height = function($height)
+	{
+		if (utils.isset($height))
+			$this.setHeight($height);
+
+		return height;
+	};
 
 	this.setAngle = function($angle)
     {
@@ -133,6 +125,14 @@ function Pyramid($radius, $height, $thetaResolution)
 			angle = 360.0;
     };
 
+	this.angle = function($angle)
+	{
+		if (utils.isset($angle))
+			$this.setAngle($angle);
+
+		return angle;
+	};
+
 	this.setDeltaX = function($deltaX)
     {
         deltaX = $deltaX;
@@ -140,6 +140,14 @@ function Pyramid($radius, $height, $thetaResolution)
 		if (!utils.isset(deltaX))
 			deltaX = 0.0;
     };
+
+	this.deltaX = function($deltaX)
+	{
+		if (utils.isset($deltaX))
+			$this.setDeltaX($deltaX);
+
+		return deltaX;
+	};
 
 	this.setDeltaY = function($deltaY)
     {
@@ -149,6 +157,14 @@ function Pyramid($radius, $height, $thetaResolution)
 			deltaY = 0.0;
     };
 
+	this.deltaY = function($deltaY)
+	{
+		if (utils.isset($deltaY))
+			$this.setDeltaY($deltaY);
+
+		return deltaY;
+	};
+
 	this.setFill = function($fill)
     {
         fill = $fill;
@@ -157,6 +173,14 @@ function Pyramid($radius, $height, $thetaResolution)
 			fill = true;
     };
 
+	this.fill = function($fill)
+	{
+		if (utils.isset($fill))
+			$this.setFill($fill);
+
+		return fill;
+	};
+
 	this.setBottomClosed = function($bottomClosed)
     {
         bottomClosed = $bottomClosed;
@@ -164,6 +188,14 @@ function Pyramid($radius, $height, $thetaResolution)
 		if (!utils.isset(bottomClosed))
 			bottomClosed = true;
     };
+
+	this.bottomClosed = function($bottomClosed)
+	{
+		if (utils.isset($bottomClosed))
+			$this.setBottomClosed($bottomClosed);
+
+		return bottomClosed;
+	};
 
 	//////////////
 	// Héritage //

@@ -1,5 +1,3 @@
-
-//function PyramidFromPolygon($radius, $height, $deltaX, $deltaY, $verticesList, $bottomClosed)
 function PyramidFromPolygon($verticesList, $height, $axis)
 {
 	///////////////
@@ -13,34 +11,14 @@ function PyramidFromPolygon($verticesList, $height, $axis)
 	var verticesList = $verticesList;
     var bottomClosed = true;
 
-	/*
-    if (!utils.isset(radius))
-		radius = 1.0;
-	//*/
-
 	if (!utils.isset(height))
 		height = 2.0;
-
-	/*
-	if (!utils.isset(deltaX))
-		deltaX = 0.0;
-
-	if (!utils.isset(deltaY))
-		deltaY = 0.0;
-	//*/
 
 	if (!utils.isset(verticesList))
 		verticesList = [];
 
-	//*
 	if (!Array.isArray(verticesList) && utils.isset(verticesList.samplePoints))
 		verticesList = verticesList.samplePoints();
-	//*/
-
-	/*
-	if (!utils.isset(bottomClosed))
-		bottomClosed = true;
-	//*/
 
 	var axis = $axis;
 
@@ -117,8 +95,7 @@ function PyramidFromPolygon($verticesList, $height, $axis)
 	////////////////
 
 	// GET
-	
-	this.getRadius = function() { return radius; };
+
 	this.getHeight = function() { return height; };
 	this.getAngle = function() { return angle; };
 	this.getDeltaX = function() { return deltaX; };
@@ -129,20 +106,38 @@ function PyramidFromPolygon($verticesList, $height, $axis)
 
 	// SET
 	
-    this.setRadius = function($radius)
-    {
-        radius = $radius;
-
-		if (!utils.isset(radius))
-			radius = 1.0;
-    };
-
-	this.setHeight = function($height)
+    this.setHeight = function($height)
     {
         height = $height;
 
 		if (!utils.isset(height))
 			height = 2.0;
+    };
+
+	this.height = function($height)
+	{
+		if (utils.isset($height))
+			$this.setHeight($height);
+
+		return height;
+	};
+
+	this.setAxis = function($axis)
+    {
+        axis = $axis;
+
+        if (!utils.isset(axis))
+            axis = 'z';
+
+        updatePath();
+    };
+
+    this.axis = function($axis)
+    {
+        if (utils.isset($axis))
+            $this.setAxis($axis);
+
+        return axis;
     };
 
 	this.setDeltaX = function($deltaX)
@@ -153,6 +148,14 @@ function PyramidFromPolygon($verticesList, $height, $axis)
 			deltaX = 0.0;
     };
 
+	this.deltaX = function($deltaX)
+	{
+		if (utils.isset($deltaX))
+			$this.setDeltaX($deltaX);
+
+		return deltaX;
+	};
+
 	this.setDeltaY = function($deltaY)
     {
         deltaY = $deltaY;
@@ -160,6 +163,14 @@ function PyramidFromPolygon($verticesList, $height, $axis)
 		if (!utils.isset(deltaY))
 			deltaY = 0.0;
     };
+
+	this.deltaY = function($deltaY)
+	{
+		if (utils.isset($deltaY))
+			$this.setDeltaY($deltaY);
+
+		return deltaY;
+	};
 
 	this.setVerticesList = function($verticesList)
 	{
@@ -176,6 +187,14 @@ function PyramidFromPolygon($verticesList, $height, $axis)
 		if (!utils.isset(bottomClosed))
 			bottomClosed = true;
     };
+
+	this.bottomClosed = function($bottomClosed)
+	{
+		if (utils.isset($bottomClosed))
+			$this.setBottomClosed($bottomClosed);
+
+		return bottomClosed;
+	};
 
 	//////////////
 	// Héritage //
