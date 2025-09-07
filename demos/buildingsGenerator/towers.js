@@ -16,6 +16,7 @@ var createTowerFloorSimple1 = function($nbFloors, $nbFaces, $radius, $wind
 	var prism = createPrism($radius, height, $nbFaces);
 	prism.getObject().setMaterial(wallMaterial);
 	prism.add(new Translation(0.0, 0.0, height/2.0));
+	prism.add(new Rotation(theta/Math.PI*180.0/2.0, 'z'));
 
 	var group = new Group();
 
@@ -85,6 +86,7 @@ var createTowerFloorSimple2 = function($nbFloors, $nbFaces, $radius, $wind
 			endRadius = $radius;
 
 		roof = new Prism($radius, endRadius, $roofHeight+floorHeight, $nbFaces);
+		roof.add(new Rotation(180.0/$nbFaces, 'z'));
 	}
 	else
 	{
@@ -165,6 +167,7 @@ var createTowerFloorDouble1 = function($nbFloors, $nbFaces, $radius, $inne
 	var prism = createPrism($radius, height, $nbFaces);
 	prism.getObject().setMaterial(wallMaterial);
 	prism.add(new Translation(0.0, 0.0, height/2.0));
+	prism.add(new Rotation(theta/Math.PI*180.0/2.0, 'z'));
 
 	var group = new Group();
 
@@ -213,6 +216,7 @@ var createTowerFloorDouble2 = function($nbFloors, $nbFaces, $radius, $inne
 			endRadius = $radius;
 
 		roof = new Prism($radius, endRadius, $roofHeight+floorHeight, $nbFaces);
+		roof.add(new Rotation(180.0/$nbFaces, 'z'));
 	}
 	else
 	{
@@ -280,6 +284,7 @@ var createBaseTower1 = function($nbFloors, $nbFaces, $radius, $windowType)
 	var prism = createPrism($radius, height, $nbFaces);
 	prism.getObject().setMaterial(wallMaterial);
 	prism.add(new Translation(0.0, 0.0, height/2.0));
+	prism.add(new Rotation(theta/Math.PI*180.0/2.0, 'z'));
 
 	var group = new Group();
 
@@ -415,6 +420,7 @@ var createBaseTower3 = function($nbFloors, $nbFaces, $radius, $windowType)
 	//var prism = new Prism($radius, $radius, 0.2, 360, 0.0, 0.0, $nbFaces, true, true, true);
 	var prism = new RegularPolygon($radius, $nbFaces);
 	prism.setMaterial(wallMaterial);
+	prism.add(new Rotation(theta/Math.PI*180.0/2.0, 'z'));
 	var prismInstance = new Instance(prism);
 	prismInstance.add(new Translation(0.0, 0.0, height));
 
@@ -531,6 +537,7 @@ var createTower = function($floorsList)
 		{
 			var roof = createPrismRevRoof(nbRadius*diagFloor, nbFloors*floorHeight, roofRadius*diagFloor, roofType, nbFaces);
 			roof.add(new Translation(0.0, 0.0, offsetHeight));
+			roof.add(new Rotation(180.0/nbFaces, 'z'));
 			group.add(roof);
 		}
 		else if (type === 'platform1')
@@ -538,7 +545,7 @@ var createTower = function($floorsList)
 			var platform = createPrism(nbRadius*diagFloor, nbFloors*floorHeight, nbFaces);
 			platform.getObject().setMaterial(wallMaterial);
 			platform.add(new Translation(0.0, 0.0, offsetHeight + nbFloors*floorHeight/2.0));
-			platform.add(new Rotation(180.0/nbFaces, 'z'));
+			//platform.add(new Rotation(180.0/nbFaces, 'z'));
 			group.add(platform);
 		}
 		else if (type === 'platform2')
@@ -546,7 +553,7 @@ var createTower = function($floorsList)
 			var platform = createPrism(nbRadius*diagFloor, nbFloors*floorHeight, nbFaces);
 			platform.getObject().setMaterial(wallMaterial);
 			platform.add(new Translation(0.0, 0.0, offsetHeight + nbFloors*floorHeight/2.0));
-			platform.add(new Rotation(180.0/nbFaces, 'z'));
+			//platform.add(new Rotation(180.0/nbFaces, 'z'));
 			group.add(platform);
 
 			var theta = 2.0*Math.PI/nbFaces;
@@ -563,7 +570,7 @@ var createTower = function($floorsList)
 			var barsGroup = new Group();
 			barsGroup.add(bars);
 			barsGroup.add(new Translation(0.0, 0.0, 0.6+offsetHeight + nbFloors*floorHeight));
-			barsGroup.add(new Rotation(180.0/nbFaces, 'z'));
+			//barsGroup.add(new Rotation(180.0/nbFaces, 'z'));
 
 			group.add(barsGroup);
 
@@ -575,7 +582,8 @@ var createTower = function($floorsList)
 			var ring = new PrismRevolution(ringProfilPoints, nbFaces, 30.0);
 			ring.setMaterial(metalMaterial);
 			ring.add(new Translation(0.0, 0.0, 1.2 + offsetHeight + nbFloors*floorHeight));
-			ring.add(new Rotation(180.0/nbFaces, 'z'));
+			//ring.add(new Rotation(180.0/nbFaces, 'z'));
+			ring.add(new Rotation(theta/Math.PI*180.0/2.0, 'z'));
 			group.add(ring);
 		}
 		else if (type === 'platform3')
@@ -583,7 +591,7 @@ var createTower = function($floorsList)
 			var platform = new Cylinder(nbRadius*diagFloor, nbRadius*diagFloor, nbFloors*floorHeight);
 			platform.setMaterial(wallMaterial);
 			platform.add(new Translation(0.0, 0.0, offsetHeight + nbFloors*floorHeight/2.0));
-			platform.add(new Rotation(180.0/nbFaces, 'z'));
+			//platform.add(new Rotation(180.0/nbFaces, 'z'));
 			group.add(platform);
 		}
 		else if (type === 'platform4')
@@ -591,7 +599,7 @@ var createTower = function($floorsList)
 			var platform = new Cylinder(nbRadius*diagFloor, nbRadius*diagFloor, nbFloors*floorHeight);
 			platform.setMaterial(wallMaterial);
 			platform.add(new Translation(0.0, 0.0, offsetHeight + nbFloors*floorHeight/2.0));
-			platform.add(new Rotation(180.0/nbFaces, 'z'));
+			//platform.add(new Rotation(180.0/nbFaces, 'z'));
 			group.add(platform);
 
 			var circle = new Circle(nbRadius*diagFloor-0.15);
@@ -604,7 +612,7 @@ var createTower = function($floorsList)
 			var barsGroup = new Group();
 			barsGroup.add(bars);
 			barsGroup.add(new Translation(0.0, 0.0, 0.6+offsetHeight + nbFloors*floorHeight));
-			barsGroup.add(new Rotation(180.0/nbFaces, 'z'));
+			//barsGroup.add(new Rotation(180.0/nbFaces, 'z'));
 
 			group.add(barsGroup);
 
@@ -616,7 +624,7 @@ var createTower = function($floorsList)
 			var ring = new Revolution(ringProfilPoints, 360.0,'', 32, 30.0);
 			ring.setMaterial(metalMaterial);
 			ring.add(new Translation(0.0, 0.0, 1.2 + offsetHeight + nbFloors*floorHeight));
-			ring.add(new Rotation(180.0/nbFaces, 'z'));
+			//ring.add(new Rotation(180.0/nbFaces, 'z'));
 			group.add(ring);
 		}
 

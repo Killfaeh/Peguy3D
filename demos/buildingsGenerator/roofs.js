@@ -13,7 +13,7 @@ var createRevRoof1 = function($innerRadius, $height)
 	else
 	{
 		var roofProfilePointsList = createRoofProfile1($innerRadius, $height);
-		var roof = new Revolution(roofProfilePointsList, 360.0, '', 32, 30.0);
+		var roof = new Revolution(roofProfilePointsList, 32, 30.0);
 		roof.setMaterial(roofMaterial);
 
 		originalInstances[ID] = roof;
@@ -239,7 +239,7 @@ var createPrismRevRoof1 = function($innerRadius, $height, $nbFaces)
 	{
 		var roofProfilePointsList = createRoofProfile1($innerRadius, $height, $nbFaces);
 		var roof = new PrismRevolution(roofProfilePointsList, $nbFaces, 30.0);
-		roof.add(new Rotation(180.0/$nbFaces, 'z'));
+		//roof.add(new Rotation(180.0/$nbFaces, 'z'));
 		roof.setMaterial(roofMaterial);
 
 		originalInstances[ID] = roof;
@@ -261,7 +261,7 @@ var createPrismRevRoof2 = function($innerRadius, $height, $bump, $nbFaces)
 	{
 		var roofProfilePointsList = createRoofProfile2($innerRadius, $height, $bump, $nbFaces);
 		var roof = new PrismRevolution(roofProfilePointsList, $nbFaces, 30.0);
-		roof.add(new Rotation(180.0/$nbFaces, 'z'));
+		//roof.add(new Rotation(180.0/$nbFaces, 'z'));
 		roof.setMaterial(roofMaterial);
 
 		originalInstances[ID] = roof;
@@ -283,7 +283,7 @@ var createPrismRevRoof3 = function($innerRadius, $height, $nbFaces)
 	{
 		var roofProfilePointsList = createRoofProfile3($innerRadius, $height, $nbFaces);
 		var roof = new PrismRevolution(roofProfilePointsList, $nbFaces, 30.0);
-		roof.add(new Rotation(180.0/$nbFaces, 'z'));
+		//roof.add(new Rotation(180.0/$nbFaces, 'z'));
 		roof.setMaterial(roofMaterial);
 
 		originalInstances[ID] = roof;
@@ -305,7 +305,7 @@ var createPrismRevRoof4 = function($innerRadius, $height, $bump, $nbFaces)
 	{
 		var roofProfilePointsList = createRoofProfile4($innerRadius, $height, $bump, $nbFaces);
 		var roof = new PrismRevolution(roofProfilePointsList, $nbFaces, 30.0);
-		roof.add(new Rotation(180.0/$nbFaces, 'z'));
+		//roof.add(new Rotation(180.0/$nbFaces, 'z'));
 		roof.setMaterial(roofMaterial);
 
 		originalInstances[ID] = roof;
@@ -327,7 +327,7 @@ var createPrismRevRoof5 = function($innerRadius, $height, $bump, $nbFaces)
 	{
 		var roofProfilePointsList = createRoofProfile5($innerRadius, $height, $bump, $nbFaces);
 		var roof = new PrismRevolution(roofProfilePointsList, $nbFaces, 30.0);
-		roof.add(new Rotation(180.0/$nbFaces, 'z'));
+		//roof.add(new Rotation(180.0/$nbFaces, 'z'));
 		roof.setMaterial(roofMaterial);
 
 		originalInstances[ID] = roof;
@@ -349,7 +349,7 @@ var createPrismRevRoof6 = function($innerRadius, $height, $bump, $nbFaces)
 	{
 		var roofProfilePointsList = createRoofProfile6($innerRadius, $height, $bump, $nbFaces);
 		var roof = new PrismRevolution(roofProfilePointsList, $nbFaces, 30.0);
-		roof.add(new Rotation(180.0/$nbFaces, 'z'));
+		//roof.add(new Rotation(180.0/$nbFaces, 'z'));
 		roof.setMaterial(roofMaterial);
 
 		originalInstances[ID] = roof;
@@ -371,7 +371,7 @@ var createPrismRevRoof7 = function($innerRadius, $height, $bump, $nbFaces)
 	{
 		var roofProfilePointsList = createRoofProfile7($innerRadius, $height, $bump, $nbFaces);
 		var roof = new PrismRevolution(roofProfilePointsList, $nbFaces, 30.0);
-		roof.add(new Rotation(180.0/$nbFaces, 'z'));
+		//roof.add(new Rotation(180.0/$nbFaces, 'z'));
 		roof.setMaterial(roofMaterial);
 
 		originalInstances[ID] = roof;
@@ -393,7 +393,7 @@ var createPrismRevRoof8 = function($innerRadius, $height, $bump, $nbFaces)
 	{
 		var roofProfilePointsList = createRoofProfile8($innerRadius, $height, $bump, $nbFaces);
 		var roof = new PrismRevolution(roofProfilePointsList, $nbFaces, 30.0);
-		roof.add(new Rotation(180.0/$nbFaces, 'z'));
+		//roof.add(new Rotation(180.0/$nbFaces, 'z'));
 		roof.setMaterial(roofMaterial);
 
 		originalInstances[ID] = roof;
@@ -415,7 +415,7 @@ var createPrismRevRoof9 = function($innerRadius, $height, $bump, $nbFaces)
 	{
 		var roofProfilePointsList = createRoofProfile9($innerRadius, $height, $bump, $nbFaces);
 		var roof = new PrismRevolution(roofProfilePointsList, $nbFaces, 30.0);
-		roof.add(new Rotation(180.0/$nbFaces, 'z'));
+		//roof.add(new Rotation(180.0/$nbFaces, 'z'));
 		roof.setMaterial(roofMaterial);
 
 		originalInstances[ID] = roof;

@@ -1,16 +1,7 @@
-loadScript('utils');
-loadScript('materials');
-loadScript('windows');
-loadScript('roofProfiles');
-loadScript('roofs');
-loadScript('towers');
-loadScript('walls');
-loadScript('stalinian');
-loadScript('config');
-loadScript('buildings');
-loadScript('random');
-
 //wallMaterial = whiteMaterial;
+
+//var demo0 = createDemo0();
+//Doc.add(demo0);
 
 //var demo1 = createDemo1();
 //Doc.add(demo1);
@@ -30,6 +21,7 @@ loadScript('random');
 //var miniLighthouse = createMiniLighthouse();
 //Doc.add(miniLighthouse);
 
+/*
 var nbFaces = selectFrom(nbFaceList);
 var windowTypeNum = selectFrom(numWindowList);
 var roofType = selectFrom(roofTypeNames);
@@ -60,9 +52,10 @@ else if (windowTypeNum === 4)
 	wingData = triWingData;
 	nodeData = triNodeData;
 }
+//*/
 
-var towerData1 = createRandomTower(1, nbFaces, windowTypeNum, roofType, roofTypeNum);
-var towerData2 = createRandomTower(1, nbFaces, windowTypeNum, roofType, roofTypeNum);
+//var towerData1 = createRandomTower(1, nbFaces, windowTypeNum, roofType, roofTypeNum);
+//var towerData2 = createRandomTower(1, nbFaces, windowTypeNum, roofType, roofTypeNum);
 
 //var longBuilding = createLongBuilding(3, wingData, nodeData, [towerData1, towerData2]);
 //Doc.add(longBuilding);
@@ -82,10 +75,10 @@ var towerData2 = createRandomTower(1, nbFaces, windowTypeNum, roofType, r
 
 //// Style stalinien ////
 
-var hBuilding = createHBuilding(4, stalinianWingData, null, [stalinianTowerData1, stalinianTowerData5, stalinianTowerData1, stalinianTowerData1, stalinianTowerData1], 3, true);
+var hBuilding = createHBuilding(4, stalinianWingData, null, [stalinianTowerData1, stalinianTowerData5], true);
 Doc.add(hBuilding);
 
 //var gridBuilding = createGridBuilding(3, 3, stalinianWingData, null, [stalinianTowerData5, stalinianTowerData1], true, false);
 //Doc.add(gridBuilding);
 
-console.log("originalInstances = " + originalInstances.length);
+//console.log("originalInstances = " + originalInstances.length);

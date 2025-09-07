@@ -208,12 +208,12 @@ var createStalinianTowerFloor = function($floorData)
 	for (var i = 0; i < nbFaces; i++)
 	{
 		var front = createStalinianFront(frontData);
-		front.add(new Rotation((i*theta + theta/2.0)/Math.PI*180.0, 'z'));
+		front.add(new Rotation((i*theta)/Math.PI*180.0, 'z'));
 		front.add(new Translation(faceDistance-frontData.marginDepth, 0.0, 0.0));
 		group.add(front);
 	}
 
-	group.add(new Rotation(theta/2.0/Math.PI*180.0));
+	//group.add(new Rotation(theta/2.0/Math.PI*180.0));
 
 	return group;
 };
@@ -363,7 +363,7 @@ var createStalinianNode = function($nodeData)
 	var prism = createPrism(nbRadius*diagFloor, nbHeight*floorHeight, nbFaces);
 	prism.getObject().setMaterial(wallMaterial);
 	prism.add(new Translation(0.0, 0.0, nbHeight*floorHeight/2.0));
-	prism.add(new Rotation(theta/2.0, 'z'));
+	//prism.add(new Rotation(theta/2.0, 'z'));
 	group.add(prism);
 
 	for (var i = 0; i < nbFaces/2; i++)

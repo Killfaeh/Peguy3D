@@ -299,7 +299,7 @@ var createNode = function($nodeData)
 	var prism = createPrism(nbRadius*diagFloor, nbHeight*floorHeight, nbFaces);
 	prism.getObject().setMaterial(wallMaterial);
 	prism.add(new Translation(0.0, 0.0, nbHeight*floorHeight/2.0));
-	prism.add(new Rotation(theta/2.0, 'z'));
+	//prism.add(new Rotation(theta/2.0, 'z'));
 	group.add(prism);
 
 	for (var i = 0; i < nbFaces/2; i++)

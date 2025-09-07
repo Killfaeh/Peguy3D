@@ -19,7 +19,7 @@ var createInnerWindow1 = function($width, $height, $depth)
 		path.lineTo([-$width/2.0, 0.0]);
 		path.lineTo([$width/2.0, 0.0]);
 		path.moveTo([$width/2.0, $height-$width/2.0]);
-		path.arc([$width/2.0, $width/2.0], 1, 0, 1, [-$width/2.0, $height-$width/2.0]);
+		path.arc([$width/2.0, $width/2.0], 0, 0, 0, [-$width/2.0, $height-$width/2.0]);
 		path.close();
 	
 		var pointsList = path.samplePoints();
@@ -57,7 +57,7 @@ var createOuterWindow1_1 = function($width, $height, $thickness, $depth)
 		path.lineTo([$width/2.0-$thickness, 0.0]);
 		path.lineTo([$width/2.0, 0.0]);
 		path.moveTo([$width/2.0, $height-$width/2.0]);
-		path.arc([$width/2.0, $width/2.0], 1, 0, 1, [-$width/2.0, $height-$width/2.0]);
+		path.arc([$width/2.0, $width/2.0], 0, 0, 0, [-$width/2.0, $height-$width/2.0]);
 		path.close();
 	
 		var pointsList = path.samplePoints();
@@ -110,12 +110,12 @@ var createOuterWindow1_2 = function($width, $height, $thickness, $depth)
 		path.lineTo([-$width/2.0, 0.0]);
 		path.lineTo([-$width/2.0+$thickness, 0.0]);
 		path.lineTo([-$width/2.0+$thickness, $height-$width/2.0]);
-		path.arc([$width/2.0-$thickness, $width/2.0-$thickness], 1, 0, 0, [$width/2.0-$thickness, $height-$width/2.0]);
+		path.arc([$width/2.0-$thickness, $width/2.0-$thickness], 0, 0, 0, [$width/2.0-$thickness, $height-$width/2.0]);
 		path.lineTo([$width/2.0-$thickness, $height-$width/2.0]);
 		path.lineTo([$width/2.0-$thickness, 0.0]);
 		path.lineTo([$width/2.0, 0.0]);
 		path.moveTo([$width/2.0, $height-$width/2.0]);
-		path.arc([$width/2.0, $width/2.0], 1, 0, 1, [-$width/2.0, $height-$width/2.0]);
+		path.arc([$width/2.0, $width/2.0], 0, 0, 0, [-$width/2.0, $height-$width/2.0]);
 		path.close();
 	
 		var pointsList = path.samplePoints();
@@ -767,7 +767,7 @@ var createOuterWindow4_2 = function($width, $height, $arcHeight, $thicknes
 		extrusion = new Instance(instance);
 	else
 	{
-		var theta = Math.arctan($width/2.0, $arcHeight);
+		var theta = Trigo.atan($width/2.0, $arcHeight);
 		var arcThickness = $thickness/Math.sin(theta);
 		var path = new Path([]);
 		path.moveTo([-$width/2.0, $height-$arcHeight]);
@@ -1149,7 +1149,7 @@ var createDoubleWindow1 = function($width, $height, $arcHeight, $thickness
 	{
 		outerWindow = createOuterWindow4_2($width, $height, $arcHeight, $thickness, $depth);
 
-		var theta = Math.arctan($width/2.0, $arcHeight);
+		var theta = Trigo.atan($width/2.0, $arcHeight);
 		var arcThickness = $thickness/Math.sin(theta);
 		innerHeight = $height-$arcHeight/2.0-arcThickness/2.0;
 		innerArcHeight = $arcHeight/2.0-arcThickness/2.0;

@@ -351,7 +351,7 @@ var createDemo1 = function()
 
 	var centerRoof = new Prism((baseNbRadius-1.4)*diagFloor, 0.0001, 10*floorHeight, 4);
 	centerRoof.setMaterial(roofMaterial);
-	centerRoof.add(new Rotation(45.0, 'z'));
+	//centerRoof.add(new Rotation(45.0, 'z'));
 	centerRoof.add(new Translation(0.0, 0.0, centerTower.height + 20*floorHeight + topCenterTower.height + 5*floorHeight));
 	group.add(centerRoof);
 
@@ -494,7 +494,7 @@ var createDemo1 = function()
 		wingRoof.setMaterial(roofMaterial);
 		wingRoof.add(new Rotation(i*theta/Math.PI*180.0, 'z'));
 		wingRoof.add(new Translation(0.0, faceDistance + 7.5*floorHeight + 25.5, 5*floorHeight + wingTower.height));
-		wingRoof.add(new Rotation(45.0, 'z'));
+		//wingRoof.add(new Rotation(45.0, 'z'));
 		group.add(wingRoof);
 	}
 
@@ -1067,7 +1067,7 @@ var createlighthouse = function()
 
 	var centerRoof = new Prism(3.75*diagFloor, 0.0001, 20*floorHeight, 4);
 	centerRoof.setMaterial(roofMaterial);
-	centerRoof.add(new Rotation(45.0, 'z'));
+	//centerRoof.add(new Rotation(45.0, 'z'));
 	centerRoof.add(new Translation(0.0, 0.0, tower1.height + 20*floorHeight + tower2.height + 10*floorHeight));
 	group.add(centerRoof);
 
@@ -1136,7 +1136,7 @@ var createlighthouse = function()
 
 		var cornerRoof = new Prism(1.3*diagFloor, 0.0001, 10*floorHeight, 4);
 		cornerRoof.setMaterial(roofMaterial);
-		cornerRoof.add(new Rotation(45.0, 'z'));
+		//cornerRoof.add(new Rotation(45.0, 'z'));
 		cornerRoof.add(new Translation(0.0, 0.0, cornerTower.height + 5*floorHeight));
 		group.add(cornerRoof);
 
